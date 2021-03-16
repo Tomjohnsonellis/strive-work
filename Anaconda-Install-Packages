@@ -1,4 +1,0 @@
-# These are the commands required to add packages to anaconda
-# Format: conda install [packages]
-
-conda install numpy pandas matplotlib

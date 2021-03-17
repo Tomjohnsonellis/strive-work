@@ -1,4 +1,4 @@
-![Strive.school logo](http://strive.school/assets/strive_logo02.png)
+![Strive.school logo](https://images.typeform.com/images/b2bYUGSFJFL6/image/default)
 
 # Coursework Repo
 

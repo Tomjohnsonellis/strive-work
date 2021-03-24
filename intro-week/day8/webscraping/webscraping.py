@@ -1,4 +1,6 @@
+# If you would prefer to view this on deepnote:
 # https://deepnote.com/project/webscraping-pair-programming-yZLBey_jQIOHaMhck-ea0w/%2Fnotebook.ipynb#00001-5a664854-c744-47d9-a248-1dc03cb70d05
+# Thanks to Umidjan Zaxiddinovich for being my programming-pair-partner today
 
 from bs4 import BeautifulSoup
 import numpy as np

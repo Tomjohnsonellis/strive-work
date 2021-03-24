@@ -89,3 +89,10 @@ df[4] = df[4].replace(' °F', "")
 
 # filter(lambda x: x.isdigit(), s)
 print(df)
+
+# Due to deadlines I have to stop here, feedback for myself: practice with beautiful soup and lookup actual methods for stripping characters
+# I found that pair programming makes me just use what I currently know as opposed to the usual research as I go style.
+
+# Things left to do:
+# Get the digits out of the dataframe column, convert them to celcius
+# Display the name of each element scraped (This is going to be very tricky with the current way this program works.)

@@ -5,7 +5,7 @@ Today we covered a range of available services that can make our day to day work
 I checked out a few services, specifically:
 - [Link Tree](linktr.ee) for amalgamating any professional links I may need
 - [Loom](loom.com) for quickly recording and sharing screen+webcam captures
-- [Figma](figma.com) for rapidly building presentations (these can later be used with other services)
+- [Figma](figma.com) for rapidly building presentations (these can later be used with other services) [Here's a quick example](https://www.figma.com/proto/De8lm6FMzmqsDzTYQ3Bae5/Day9-Things?node-id=1%3A5&scaling=min-zoom&page-id=0%3A1)
 - [Overleaf](overleaf.com) for quickly putting together LaTeX documents ([Here's a CV made with it](https://www.overleaf.com/read/cpcvxgxbtyhb))
 
 

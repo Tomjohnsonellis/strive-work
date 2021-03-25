@@ -6,7 +6,7 @@ I checked out a few services, specifically:
 - [Link Tree](linktr.ee) for amalgamating any professional links I may need
 - [Loom](loom.com) for quickly recording and sharing screen+webcam captures
 - [Figma](figma.com) for rapidly building presentations (these can later be used with other services)
-- [Overleaf](overleaf.com) for quickly putting together LaTeX documents
+- [Overleaf](overleaf.com) for quickly putting together LaTeX documents ([Here's a CV made with it](https://www.overleaf.com/read/cpcvxgxbtyhb))
 
 
 <hl><hl/>

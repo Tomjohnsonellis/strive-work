@@ -79,5 +79,9 @@ benign_scores = (score_probs[score_probs["diagnosis"] == 1]).drop(["diagnosis"],
 #print(malignant_scores)
 #print(malignant_scores.value_counts())
 
-
+# Here's a graph showing that malignant values are more likely to occur
+# if you have more values closer to the average for malignants (Groundbreaking I know)
+plt.hist(benign_scores, 4, alpha = 0.5, color="green")
+plt.hist(malignant_scores, 4,alpha = 0.5, color="red")
+plt.show()
 

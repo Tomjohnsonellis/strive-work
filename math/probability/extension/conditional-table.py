@@ -81,7 +81,9 @@ benign_scores = (score_probs[score_probs["diagnosis"] == 1]).drop(["diagnosis"],
 
 # Here's a graph showing that malignant values are more likely to occur
 # if you have more values closer to the average for malignants (Groundbreaking I know)
-plt.hist(benign_scores, 4, alpha = 0.5, color="green")
-plt.hist(malignant_scores, 4,alpha = 0.5, color="red")
+histo_bins = [-0.5,0.5,1.5,2.5,3.5,4.5,5.5]
+plt.hist(benign_scores, histo_bins, alpha = 0.5, color="green")
+plt.hist(malignant_scores, histo_bins,alpha = 0.5, color="red")
+# Bar charts were not co-operating today, the histograms need their x-label moved a bit to the right
 plt.show()
 

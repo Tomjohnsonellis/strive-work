@@ -117,7 +117,8 @@ def report(initial, magic):
     print("Below our lowest value?: {}".format(below))
     normal = not bool(above + below)
     if not normal:
-        print("We can safely say, with 95% confidence, that those dice are rigged")
+        print("We can safely say, with 95% confidence, that these dice are not fair")
+        print("We will REJECT the null hypothesis (The dice are normal")
     else:
         print("We can safely say we're just a sore loser.")
 

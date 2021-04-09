@@ -50,9 +50,10 @@ def initial_graph():
     initial_data = roll_dice(dice_to_roll)
     initial_data = pd.DataFrame([initial_data]).transpose()
     sorted_initial = initial_data.value_counts().sort_index()
-    print(type(sorted_initial))
-    print(sorted_initial)
-    plt.bar([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], sorted_initial.values, alpha=0.75, color="green")
+    #print(type(sorted_initial))
+    #print(sorted_initial)
+    plt.bar([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], sorted_initial.values, alpha=0.75, color="green",
+            label="Fair results")
     # Stats
     initial_stats = {
         "mean": np.mean(initial_data[0]),
@@ -67,8 +68,8 @@ def magic_graph():
     magic_data = roll_magic_dice(dice_to_roll)
     magic_data = pd.DataFrame([magic_data]).transpose()
     sorted_magic = magic_data.value_counts().sort_index()
-    print(sorted_magic)
-    plt.bar([4, 5, 6, 7, 8, 9, 10, 11, 12], sorted_magic.values, alpha=0.5, color="red")
+    #print(sorted_magic)
+    plt.bar([4, 5, 6, 7, 8, 9, 10, 11, 12], sorted_magic.values, alpha=0.5, color="red", label="Other results")
     # Magic Stats
     magic_stats = {
         "mean": np.mean(magic_data[0]),
@@ -80,20 +81,18 @@ def magic_graph():
 
 
 def report(initial, magic):
-    # For 95% confidence
+    # For 95% confidence, z = 1.96
     z = 1.96
 
     # Standard Errors
     initial["std_error"] = initial["std"] / np.sqrt(initial["n"])
     magic["std_error"] = magic["std"] / np.sqrt(magic["n"])
 
+    # Calculate the highest and lowest value we're happy with
     initial["upper_conf"] = initial["mean"] + (z * initial["std_error"])
     initial["lower_conf"] = initial["mean"] - (z * initial["std_error"])
 
-    # magic["upper_conf"] = magic["mean"] + (z * initiial["std_error"])
-    # magic["lower_conf"] = magic["mean"] - (z * initiial["std_error"])
-
-    biggest_diff = initial["upper_conf"] - initial["lower_conf"]
+    biggest_diff = abs(initial["upper_conf"] - initial["mean"])
     difference_in_mean = abs(initial["mean"] - magic["mean"])
     # print(difference_in_mean)
     print("-------------------------")
@@ -111,35 +110,39 @@ def report(initial, magic):
     print("Are we confident this is normal?")
     print("The biggest difference in the mean we will accept is: {}".format(biggest_diff))
     print("This difference is: {}".format(difference_in_mean))
-    above = (magic["mean"] > initial["upper_conf"])
-    below = (magic["mean"] < initial["lower_conf"])
+    above = (difference_in_mean > biggest_diff)
     print("Above our highest value?: {}".format(above))
-    print("Below our lowest value?: {}".format(below))
-    normal = not bool(above + below)
+
+    normal = not bool(above)
     if not normal:
         print("We can safely say, with 95% confidence, that these dice are not fair")
-        print("We will REJECT the null hypothesis (The dice are normal")
+        print("We will REJECT the null hypothesis")
     else:
-        print("We can safely say we're just a sore loser.")
+        print("We can safely say that, by our criteria, this is normal.")
 
     plt.scatter(initial["mean"], 175, color="green", label="Fair Mean")
     plt.scatter(magic["mean"], 175, color="red", label="Other mean")
-    plt.plot([initial["mean"], magic["mean"]], [175,175],color="black",linewidth=2, label="Difference in means")
+
+    plt.plot([initial["upper_conf"],initial["upper_conf"]], [165,185], color="black")
+    plt.plot([initial["lower_conf"], initial["lower_conf"]], [165, 185], color="black")
+
+    plt.plot([initial["mean"], magic["mean"]], [175, 175], color="black", linestyle="--", label="Difference in means")
     plt.xlabel("Results of throwing 2 Dice")
     plt.ylabel("Quantity of result")
     plt.title("Are those dice rigged?")
 
 
-
-retries = 10
+# Here's the main()
 dice_to_roll = 1000
 
 dice_range = []
 for integer in (range(2, 13, 1)):
     dice_range.append(integer)
 
-fair = initial_graph()
-rigged = magic_graph()
-report(fair, rigged)
+fair = initial_graph() # Create the fair data
+rigged = magic_graph() # Create the rigged data
+report(fair, rigged) # Report on it
+
 plt.legend()
+plt.savefig("dice.png")
 plt.show()

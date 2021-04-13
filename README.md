@@ -1,9 +1,32 @@
-![Strive.school logo](https://images.typeform.com/images/b2bYUGSFJFL6/image/default)
 
-# Coursework Repo
+![Logo](https://images.typeform.com/images/b2bYUGSFJFL6/image/default)
 
-This is a collection of tasks done while on the strive.school AI engineering course.
+    
+# Strive Work
 
-[TOC]
-[intro-week: The fundamentals: Environment setup & Hello world](https://github.com/Tomjohnsonellis/strive-homework/tree/main/intro-week)
-[Week 2: ?]
+This is a collection of the work I have done while attending the Strive School AI Engineering course.
+## Modules
+
+Intro Week
+
+    - Environment Setup
+    - Python Intro: Numpy, Pandas, Matplotlib 
+    - Web scraping
+    - Github
+    - No-Code Solutions
+
+Maths
+
+    - Calculus (Differentials and Integrals)
+    - Linear Algebra (Vectors and Matrices)
+    - Probability
+    - Statistics
+    - Confidence Intervals and Hypothesis Testing 
+
+Build Week
+
+    - Group project consisting of...
+    - Data cleaning
+    - Web scraping
+    - Data Analysis and Visualisation
+  

@@ -7,7 +7,7 @@
 This is a collection of the work I have done while attending the Strive School AI Engineering course.
 ## Modules
 
-Intro Week
+[Intro Week](https://github.com/Tomjohnsonellis/strive-work/tree/main/intro-week)
 
     - Environment Setup
     - Python Intro: Numpy, Pandas, Matplotlib 
@@ -15,7 +15,7 @@ Intro Week
     - Github
     - No-Code Solutions
 
-Maths
+[Maths](https://github.com/Tomjohnsonellis/strive-work/tree/main/math)
 
     - Calculus (Differentials and Integrals)
     - Linear Algebra (Vectors and Matrices)
@@ -23,10 +23,13 @@ Maths
     - Statistics
     - Confidence Intervals and Hypothesis Testing 
 
-Build Week
+[Build Week](https://github.com/Tomjohnsonellis/Dystopian-Analysis)
 
     - Group project consisting of...
     - Data cleaning
     - Web scraping
     - Data Analysis and Visualisation
-  
+
+Machine Learning
+
+    - Scikit learn  

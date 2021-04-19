@@ -1,3 +1,5 @@
+*.idea
+*_checkpoints
 intro-week/day3/ai_mar21
 intro-week/day3/tasks/.ipynb_checkpoints/hard-exercise-checkpoint.ipynb
 intro-week/day3/tasks/.ipynb_checkpoints/medium-exercise-checkpoint.ipynb

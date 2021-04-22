@@ -1,6 +1,6 @@
 
 ![Logo](https://images.typeform.com/images/b2bYUGSFJFL6/image/default)
-![My Stats](https://github-readme-stats.vercel.app/api/?username=Tomjohnsonellis&count_private=true&theme=tokyonight&showicons=true)
+![My Stats](https://github-readme-stats.vercel.app/api/?username=Tomjohnsonellis&count_private=true&theme=nightowl&showicons=true)
 
     
 # Strive Work

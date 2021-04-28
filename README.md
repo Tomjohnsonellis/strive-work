@@ -31,6 +31,9 @@ This is a collection of the work I have done while attending the Strive School A
     - Web scraping
     - Data Analysis and Visualisation
 
-Machine Learning
+[Machine Learning](https://github.com/Tomjohnsonellis/strive-work/tree/main/machine-learning)
 
-    - Scikit learn  
+    - Regression Algorithms
+    - Principal component analysis
+    - K-means Clustering
+    - Decision Trees

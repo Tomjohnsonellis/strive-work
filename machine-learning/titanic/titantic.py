@@ -25,6 +25,7 @@ def feature_engineering(X):
     X = bin_ages(X)
     return X
 
+
 def bin_ages(X_train):
     # Change the ages data from an age to age range
     # baby = 0-4
@@ -35,10 +36,10 @@ def bin_ages(X_train):
     # senior = 41+
     X_train["Age"] = X_train["Age"].astype(int)
     X_train["baby"] = X_train["Age"].le(4).astype(int)
-    X_train["child"] = X_train["Age"].between(5,9).astype(int)
-    X_train["teen"] = X_train["Age"].between(10,14).astype(int)
-    X_train["young_adult"] = X_train["Age"].between(15,19).astype(int)
-    X_train["adult"] = X_train["Age"].between(20,40).astype(int)
+    X_train["child"] = X_train["Age"].between(5, 9).astype(int)
+    X_train["teen"] = X_train["Age"].between(10, 14).astype(int)
+    X_train["young_adult"] = X_train["Age"].between(15, 19).astype(int)
+    X_train["adult"] = X_train["Age"].between(20, 40).astype(int)
     X_train["senior"] = X_train["Age"].ge(41).astype(int)
     return X_train
 
@@ -67,6 +68,7 @@ def one_hot_class(X):
     X["Middle_class"] = one_hots[2]
     X["Lower_class"] = one_hots[3]
     return X
+
 
 def cleanup(raw_data):
     # Clean up some incomplete rows
@@ -97,28 +99,37 @@ def build_model():
     X = feature_engineering(X)
     # Drop anything we aren't using or don't think is useful
     X = remove_excess(X)
-
+    # Split the data
     X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=0)
-
-    clf = RandomForestClassifier(criterion="entropy", random_state=0, n_estimators=100)
+    # Make and fit a model
+    clf = RandomForestClassifier(criterion="entropy", random_state=0, n_estimators=1000)
     clf.fit(X_train, y_train)
-    # scores = cross_val_score(clf, X_test, y_test)
-    # print(f"Random Forest scored: {scores.mean()}")
     return clf
 
 
-clf = build_model()
-test_data = pd.read_csv("test.csv")
-test_data = cleanup(test_data)
-test_data = feature_engineering(test_data)
-test_data.index = test_data.PassengerId
-test_data = remove_excess(test_data)
+def prep_test():
+    test_data = pd.read_csv("test.csv")
+    test_data["Age"] = test_data["Age"].fillna(test_data["Age"].mean())
+    test_data["Fare"] = test_data["Fare"].fillna(test_data["Fare"].mean())
+    test_data = feature_engineering(test_data)
+    test_data.index = test_data.PassengerId
+    test_data = remove_excess(test_data)
+    return test_data
 
-kaggle_predictions = clf.predict(test_data)
-pid = test_data.index
-columns=["PassengerId", "Survived"]
-df = pd.DataFrame(kaggle_predictions)
-df.index = pid
-df.columns = ["Survived"]
 
-df.to_csv("kaggle-predictions.csv")
+def create_submission(test_data, clf):
+    kaggle_predictions = clf.predict(test_data)
+    pid = test_data.index
+    columns = ["PassengerId", "Survived"]
+    df = pd.DataFrame(kaggle_predictions)
+    df.index = pid
+    df.columns = ["Survived"]
+    df.to_csv("kaggle-predictions.csv")
+    print("Done.")
+    return
+
+
+if __name__ == '__main__':
+    clf = build_model()
+    test_data = prep_test()
+    create_submission(test_data, clf)

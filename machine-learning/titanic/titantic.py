@@ -18,19 +18,21 @@ from sklearn.model_selection import train_test_split, cross_val_score
 
 
 # Feature engineering
-
-#years = X_train.Age.astype(int).value_counts().sort_index()
-#plt.scatter(years.index, years.values)
-#years
-#years = years.transpose()
-# baby = 0-4
-# child = 5-9
-# teen = 10-14
-# young_adult = 15-19
-# adult = 20-40
-# senior = 41+
+def feature_engineering(X):
+    X = one_hot_embark(X)
+    X = one_hot_sex(X)
+    X = one_hot_class(X)
+    X = bin_ages(X)
+    return X
 
 def bin_ages(X_train):
+    # Change the ages data from an age to age range
+    # baby = 0-4
+    # child = 5-9
+    # teen = 10-14
+    # young_adult = 15-19
+    # adult = 20-40
+    # senior = 41+
     X_train["Age"] = X_train["Age"].astype(int)
     X_train["baby"] = X_train["Age"].le(4).astype(int)
     X_train["child"] = X_train["Age"].between(5,9).astype(int)
@@ -42,6 +44,7 @@ def bin_ages(X_train):
 
 
 def one_hot_embark(X):
+    # One-hot encode the place people embarked from
     one_hots = pd.get_dummies(X["Embarked"], prefix='Embark')
     X["Embark_C"] = one_hots["Embark_C"]
     X["Embark_Q"] = one_hots["Embark_Q"]
@@ -50,49 +53,72 @@ def one_hot_embark(X):
 
 
 def one_hot_sex(X):
-    dummies = pd.get_dummies(X.Sex)
-    X["female"] = dummies["female"]
-    X["male"] = dummies["male"]
+    # One-hot encode the sex of passengers
+    one_hots = pd.get_dummies(X.Sex)
+    X["female"] = one_hots["female"]
+    X["male"] = one_hots["male"]
     return X
 
 
 def one_hot_class(X):
-    class_dummies = pd.get_dummies(X.Pclass)
-    X["Upper_class"] = class_dummies[1]
-    X["Middle_class"] = class_dummies[2]
-    X["Lower_class"] = class_dummies[3]
+    # One-hot encode the socio-economic class of each passenger
+    one_hots = pd.get_dummies(X.Pclass)
+    X["Upper_class"] = one_hots[1]
+    X["Middle_class"] = one_hots[2]
+    X["Lower_class"] = one_hots[3]
+    return X
+
+def cleanup(raw_data):
+    # Clean up some incomplete rows
+    raw_data = raw_data.dropna(subset=["Age"])
+    raw_data = raw_data.dropna(subset=["Embarked"])
+    raw_data = raw_data.dropna(subset=["Fare"])
+    return raw_data
+
+
+def remove_excess(X):
+    X = X.drop(["PassengerId", "Name", "Age", "Sex", "Cabin", "Ticket", "Embarked"], axis=1)
     return X
 
 
+def build_model():
+    # Load the data
+    train = pd.read_csv("train.csv")
+    # Clean up some incomplete rows
+    train = cleanup(train)
+
+    # Determine the target(y) and data(X) to use
+    y = train.Survived
+    X = train.drop(["Survived"], axis=1)
+    # Make the index passengerId so we can keep it but not have it influence the model
+    X.index = X.PassengerId
+
+    # Do some data manipulation
+    X = feature_engineering(X)
+    # Drop anything we aren't using or don't think is useful
+    X = remove_excess(X)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=0)
+
+    clf = RandomForestClassifier(criterion="entropy", random_state=0, n_estimators=100)
+    clf.fit(X_train, y_train)
+    # scores = cross_val_score(clf, X_test, y_test)
+    # print(f"Random Forest scored: {scores.mean()}")
+    return clf
 
 
-# Load the data
-train = pd.read_csv("train.csv")
-# Turn Male/Female into 1/0
-#train.Sex = train.Sex.eq("male").astype(int)
-# one-hot encode them
+clf = build_model()
+test_data = pd.read_csv("test.csv")
+test_data = cleanup(test_data)
+test_data = feature_engineering(test_data)
+test_data.index = test_data.PassengerId
+test_data = remove_excess(test_data)
 
+kaggle_predictions = clf.predict(test_data)
+pid = test_data.index
+columns=["PassengerId", "Survived"]
+df = pd.DataFrame(kaggle_predictions)
+df.index = pid
+df.columns = ["Survived"]
 
-
-# Clean up some incomplete rows
-train = train.dropna(subset=["Age"])
-train = train.dropna(subset=["Embarked"])
-
-y = train.Survived
-X = train.drop(["Survived"], axis=1)
-X.index = X.PassengerId
-
-
-X = one_hot_embark(X)
-X = one_hot_sex(X)
-X = one_hot_class(X)
-X = bin_ages(X)
-
-X = X.drop(["PassengerId", "Name","Age", "Sex","Cabin", "Ticket", "Embarked"], axis=1)
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, random_state=0)
-
-clf = RandomForestClassifier(criterion="entropy", random_state=0, n_estimators=100)
-clf.fit(X_train, y_train)
-scores = cross_val_score(clf, X_test, y_test)
-print(f"Random Forest scored: {scores.mean()}")
+df.to_csv("kaggle-predictions.csv")

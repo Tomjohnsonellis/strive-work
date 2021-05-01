@@ -87,7 +87,7 @@ def split_data(X,y,train_size=0.8, random_state=0):
     print("Data has been split in the standard way, created global variables: X_train, X_test, y_train, y_test")
     return
 
-def scale_data(normalise=False):
+def scale_data(X_train, X_test, normalise=False):
     if normalise:
         X_train = preprocessing.normalize(X_train)
         X_test = preprocessing.normalize(X_test)
@@ -99,4 +99,29 @@ def scale_data(normalise=False):
         X_test = scaler.transform((X_test))
         print("Data has been scaled with StandardScaler")
 
-split_data(X,y)
+
+def train_model(X_train, y_train):
+
+    # Logistic regression
+    clf = LogisticRegression().fit(X_train, y_train)
+    return clf
+
+
+def test_model(clf, X_test, y_test):
+    print(f"Model: {clf}")
+    print(f"Score: {clf.score(X_test, y_test) *100}%")
+    return
+
+
+def show_cv_results(X, y):
+    print("Cross validating model...")
+    cv = cross_validate(X, y)
+    print(f"Test {test} - {score}%" for test, score in cv)
+    print(f"Average accuracy: {cv.mean()}")
+
+split_data(X,y, train_size=0.5)
+scale_data(X_train, X_test, normalise=True)
+#train_model(X_train, y_train)
+test_model(train_model(X_train, y_train), X_test, y_test)
+show_cv_results(X, y)
+#make_predictions()

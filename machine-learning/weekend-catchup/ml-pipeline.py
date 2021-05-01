@@ -130,8 +130,6 @@ def train_model(X_train, y_train):
 def test_model(clf, X_test, y_test):
     print(f"Model: {clf}")
     print(f"Score: {clf.score(X_test, y_test) *100}%")
-
-
     return
 
 
@@ -149,6 +147,12 @@ def show_cv_results(clf, X, y, graphs=False):
         plt.title("Cross Validation Results")
         plt.legend()
         plt.show()
+
+def basic_pipeline(X,y, normalise=False):
+    split_data(X, y, train_size=0.5)
+    scale_data(X_train, X_test, normalise=normalise)
+    train_model(X_train, y_train)
+    return clf
 
 
 if __name__ == '__main__':

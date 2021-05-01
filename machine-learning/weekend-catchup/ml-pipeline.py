@@ -49,6 +49,54 @@ A typical workflow can go like this:
 And that's a basic outline of how a project could go - it's good to break down projects into steps, and sub-steps.
 ----------
 Now for a machine learning pipeline, a helpful function that will allow you to work more effectively.
-
-
 """
+# Typical imports
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+from sklearn import datasets
+from sklearn.pipeline import make_pipeline
+from sklearn import model_selection
+from sklearn.preprocessing import StandardScaler
+from sklearn import preprocessing
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split, cross_validate
+
+# What a pipeline function should do is: take some data and produce some results from it
+# It's just for convenience so that we don't have to redo basic things every time we want to do some work.
+
+
+# Use good ol' iris data for an example
+some_dataset = datasets.load_iris()
+
+print(some_dataset.keys())
+
+# Whatever we're doing, as long as we're trying to predict something we will need...
+# X: Data to use for predictions
+# y: What we want to predict
+X = some_dataset.data
+y = some_dataset.target
+
+
+def split_data(X,y,train_size=0.8, random_state=0):
+    global X_train, X_test, y_train, y_test
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=train_size, random_state=random_state)
+    print("Data has been split in the standard way, created global variables: X_train, X_test, y_train, y_test")
+    return
+
+def scale_data(normalise=False):
+    if normalise:
+        X_train = preprocessing.normalize(X_train)
+        X_test = preprocessing.normalize(X_test)
+        print("Data has been normalised")
+    else:
+        scaler = StandardScaler()
+        scaler.fit(X_train)
+        X_train = scaler.transform(X_train)
+        X_test = scaler.transform((X_test))
+        print("Data has been scaled with StandardScaler")
+
+split_data(X,y)

@@ -64,6 +64,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split, cross_validate
+from sklearn.cluster import KMeans
 
 # What a pipeline function should do is: take some data and produce some results from it
 # It's just for convenience so that we don't have to redo basic things every time we want to do some work.
@@ -101,9 +102,24 @@ def scale_data(X_train, X_test, normalise=False):
 
 
 def train_model(X_train, y_train):
+    global clf
 
-    # Logistic regression
-    clf = LogisticRegression().fit(X_train, y_train)
+    models = {
+        1: "Logistic Regression",
+        2: "K-Means",
+    }
+    print("Choose a model!")
+    for key in models:
+        print(f"{key} : {models[key]}")
+    choice = input(">>")
+
+    if choice == 1:
+        # Logistic regression
+        clf = LogisticRegression(max_iter=1000).fit(X_train, y_train)
+    elif choice == 2:
+        clf = KMeans().fit(X_train, y_train)
+
+
     return clf
 
 
@@ -113,15 +129,16 @@ def test_model(clf, X_test, y_test):
     return
 
 
-def show_cv_results(X, y):
-    print("Cross validating model...")
-    cv = cross_validate(X, y)
-    print(f"Test {test} - {score}%" for test, score in cv)
-    print(f"Average accuracy: {cv.mean()}")
+def show_cv_results(clf, X, y):
+    print(f"Cross validating using: {clf}...")
+    cv = cross_validate(clf, X, y)
+    for test, score in enumerate(cv["test_score"]):
+        print(f"Test {test} - {round(score*100,2) }%" )
+    print(f"Average accuracy: {round(cv['test_score'].mean() *100, 2)}%")
 
 split_data(X,y, train_size=0.5)
 scale_data(X_train, X_test, normalise=True)
-#train_model(X_train, y_train)
-test_model(train_model(X_train, y_train), X_test, y_test)
-show_cv_results(X, y)
+train_model(X_train, y_train)
+test_model(clf, X_test, y_test)
+show_cv_results(clf, X, y)
 #make_predictions()

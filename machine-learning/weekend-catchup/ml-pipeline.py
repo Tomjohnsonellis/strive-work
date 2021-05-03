@@ -48,7 +48,7 @@ A typical workflow can go like this:
 
 And that's a basic outline of how a project could go - it's good to break down projects into steps, and sub-steps.
 ----------
-Now for a machine learning pipeline, a helpful function that will allow you to work more effectively.
+Now for a machine learning pipeline, something I can refer to when starting a new task.
 """
 # Typical imports
 import numpy as np

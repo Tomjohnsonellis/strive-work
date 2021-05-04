@@ -139,6 +139,7 @@ This is a good example of how to make filling with means more effective, as appo
 
 ## Optional External Exercises:
 
+### [Done!](https://www.linkedin.com/feed/update/urn:li:activity:6795353480329510912/)
 From Kaggle [data cleaning mini course](https://www.kaggle.com/learn/data-cleaning) do:
 - [Handling Missing Values](https://www.kaggle.com/alexisbcook/handling-missing-values) Data Cleaning: 1 of 5
 - [Inconsistent Data Entry](https://www.kaggle.com/alexisbcook/inconsistent-data-entry) Data Cleaning: 5 of 5

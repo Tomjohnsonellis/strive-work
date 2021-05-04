@@ -50,9 +50,11 @@
 ### 🖋 Typos
 
 1. What is a typo?
+   <br>> Definition: A typographical error
+   <br>> wehn you misstyp somthing!
 2. What is a good method of automatically detect typos?
-
-
+<br>> Use a [list](https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines) of common misspellings and automatically correct them
+<br>> [Bonus](https://stackoverflow.com/questions/487003/how-to-detect-a-typo-in-a-product-search-and-suggest-possible-corrections): Use one of many algorithms available for the task
 
 ### Practical case
 

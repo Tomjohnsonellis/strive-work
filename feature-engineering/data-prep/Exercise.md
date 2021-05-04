@@ -61,8 +61,10 @@
 Consider the following dataset: [San Francisco Building Permits](https://www.kaggle.com/aparnashastry/building-permit-applications-data). Look at the columns "Street Number Suffix" and "Zipcode". Both of these contain missing values.
 
 - Which, if either, are missing because they don't exist?
+  <br>> It is likely that "Street Number Suffix" would be missing due to not existing, not every building is apartments.
 - Which, if either, are missing because they weren't recorded?
-
+<br>> "Zipcode" is probably just not recorded as it's the American equivalent of a post code, everywhere has one for mail purposes.
+  
 Hint: Do all addresses generally have a street number suffix? Do all addresses generally have a zipcode?
 
 
@@ -116,17 +118,24 @@ Hint: Do all addresses generally have a street number suffix? Do all addresses g
 ## Understand this code to perform the group imputation:
 
 ```python
+# First off, load the data
 df = pd.read_csv("titanic/train.csv", index_col='PassengerId')
 
+# We seem to be selecting 3 coloumns to use...
 group_cols = ['Sex','Pclass','Title']
+# This finds the average age of people who are in those specific groups
+# E.g. The average age of all (Female, Lower-Class, Mrs)
 impute_map = df.groupby(group_cols).Age.mean().reset_index(drop=False)
 
 for index, row in impute_map.iterrows(): # Iterate all group possibilities
-    
-    ind = (df[group_cols] == row[group_cols]).all(axis=1) # Returns Boolean column with the lenth of dataframe        
-    
+    # A Boolean column, true when the sample meets our criteria (In these specific groups)
+    ind = (df[group_cols] == row[group_cols]).all(axis=1) # Returns Boolean column with the length of dataframe        
+    # Replace any missing values with the average age of matching data
     df[ind] = df[ind].fillna(row["Age"])
 ```
+This is a good example of how to make filling with means more effective, as apposed to just "The average age of all passengers"
+<br>By narrowing down into specific groups, we get a better guess for that person's age, and don't distort our data as much!
+
 
 ## Optional External Exercises:
 

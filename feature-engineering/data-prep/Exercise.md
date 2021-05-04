@@ -35,10 +35,17 @@
 ### 🔎 Outliers
 
 1. What is an outlier?
+   <br>> A data point that SIGNIFICANTLY differs from the other points in the sample, e.g. it's 50x bigger
 2. What is a simple method to detect and deal with outliers of a numerical variable?
+   <br>> Luckily we have a mathematical definition of both minor and major outliers thanks to statistics.
+   <br>> Typically a minor outlier is more than 1.5x the InterQuartileRange away from the mean
+   <br>> And a major outlier is over 3x the IQR away
 3. What is novelty detection?
+   <br>> The process of detecting "novelties", which means outliers, anomalies, any kind of unusual data
+   <br>> ML algorithms tend to be used for this and they can help improve the data for other models! [Link](https://deepai.org/machine-learning-glossary-and-terms/novelty-detection)
 4. Name 4 advanced methods of outlier detection in sklearn.
-
+   <br>> [Docs](https://scikit-learn.org/stable/modules/outlier_detection.html#overview-of-outlier-detection-methods)
+   <br>> Robust Covariance, One-Class SupportVectorMachine, Isolation Forest, Local Outlier Factor
 
 ### 🖋 Typos
 

@@ -84,44 +84,62 @@ class linked_list:
 
 
 
-print("#"*25)
-print("#"*25)
-print("START")
-print("#"*25)
-print("#"*25)
-test = linked_list(["I am a list of one element"])
-print(test.data)
-print("I will now use .add(\"Added\")")
-test.add("Added")
-print(">>>Resulting in")
-print(test.data)
-print("I will now use .add_first(\"First\")")
-test.add_first("First")
-print(">>>Resulting in")
-print(test.data)
-print("I will now use .remove_head()")
-test.remove_head()
-print(">>>Resulting in")
-print(test.data)
-
-
-
+# print("#"*25)
+# print("#"*25)
+# print("START")
+# print("#"*25)
+# print("#"*25)
+# test = linked_list(["I am a list of one element"])
 # print(test.data)
-# test.add(None)
-# print("=" * 25)
+# print(">>>>>I will now use .add(\"Added\")")
+# test.add("Added")
+# print(">>>Resulting in:")
 # print(test.data)
-# print("=" * 25)
-#
-# test.add_first(None)
+# print(">>>>>I will now use .add_first(\"First\")")
+# test.add_first("First")
+# print(">>>Resulting in:")
 # print(test.data)
-# print("Removing Head")
+# print(">>>>>I will now use .remove_head()")
 # test.remove_head()
+# print(">>>>>Resulting in:")
 # print(test.data)
-# test.add_first(None)
-# print(test.data)
-# test.add(None)
-# test.add("Hello")
-# print(test.data)
+def test_method(command):
+    # This would be nice so that I just iterate through a list of commands like [.add(5), .remove_head()]
+    # No idea how to do that at the moment
+    print(f"I will perform: {str(command)}")
+    print(">>>>>Resulting in:")
+    print("results")
+
+def show(linked_list):
+    print(">>>>>Resulting in:")
+    print(linked_list.data)
+    return
+
+
+def test_all(test_linked_list):
+    print("#" * 25)
+    print("#" * 25)
+    print("START")
+    print("#" * 25)
+    print("#" * 25)
+    #test_linked_list = linked_list(["I am a list of one element"])
+    print(test_linked_list.data)
+    print(">>>>>I will now use .add(\"Added\")")
+    test_linked_list.add("Added")
+    show(test_linked_list)
+    print(">>>>>I will now use .add_first(\"First\")")
+    test_linked_list.add_first("First")
+    show(test_linked_list)
+    print(">>>>>I will now use .remove_head()")
+    test_linked_list.remove_head()
+    show(test_linked_list)
+
+
+
+dummy_list = linked_list(["I am a list of one element"])
+test_all(dummy_list)
+
+## Abandoned first draft
 # # object = "hello"
 #
 # print(id(object))

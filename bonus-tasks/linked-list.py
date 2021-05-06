@@ -5,12 +5,12 @@ Build a complete functional Linked_List class
 (with all checks and balances so it doesn't fail with Nones)
 
 Methods Required:
-    add(node): add a node in the end of the list
-    add_first(node): adds a node to the beginning of the list
+        add(node): add a node in the end of the list
+        add_first(node): adds a node to the beginning of the list
     add_at(node, index): add a node in the given position
     remove(E): removes the first node that contains that element
     remove_all(E): remove every node that contains that element
-    remove_head(): removes the first element of the list
+        remove_head(): removes the first element of the list
 
     Tostring: a native python method that makes it so when the list is printed it prints the
     entirety of the list. so if my list is: 1->3->4 it would print 1,3,4. Research is suggested.
@@ -22,7 +22,8 @@ A stored element ("Apple")
 A pointer to the next node (memory location)
 """
 
-#import nothing
+
+# import nothing
 
 ## First attempt was using dictionaries, then decided against it
 # class linked_list:
@@ -47,26 +48,29 @@ A pointer to the next node (memory location)
 
 class linked_list:
 
-    def __init__(self):
-        self.data = [
-            ["first_dummy_object",0],
-            ["second_dummy_object",None]
-        ]
+    def __init__(self, list_of_elements=None):
+        if type(list_of_elements)==list:
 
-        self.data = [
-            #"dummy_object": id(self.data["dummy_object"])
-            # "first_dummy_object": id(self.data["second_dummy_object"]),
-            # "second_dummy_object":None
-            ["first_dummy_object",id(self.data[-1][1])],
-            ["second_dummy_object", None]
-        ]
-        print("I have been created")
+            self.data = [[list_of_elements[0], None]]
+            if len(list_of_elements) >= 2:
+                for element in list_of_elements[1:]:
+                    self.add(element)
+        else:
+            self.data = [
+                ["first_dummy_object", 0],
+                ["second_dummy_object", None]
+            ]
 
+            self.data = [
+                ["first_dummy_object", id(self.data[-1][1])],
+                ["second_dummy_object", None]
+            ]
 
-    def add(self, object):
+    def add(self, object=None):
         # Adds a node at the end
-        self.data[-1][1] = id(object)
-        self.data.append([object, None])
+        if object:
+            self.data.append([object, None])
+            self.data[-2][1] = id(object)
 
     def add_first(self, object):
         new_head = [object, id(self.data[0][1])]
@@ -77,26 +81,48 @@ class linked_list:
 
 
 
-test = linked_list()
-print(test.data)
-test.add(None)
-print("="*25)
-print(test.data)
-print("="*25)
 
-# Object ids get changed after every change because "immutable"
-#print(f"I sure hope this gets put as first pointer: {id(poggers.data[0][0])}")
-test.add_first(None)
+
+
+print("#"*25)
+print("#"*25)
+print("START")
+print("#"*25)
+print("#"*25)
+test = linked_list(["I am a list of one element"])
 print(test.data)
-print("Removing Head")
+print("I will now use .add(\"Added\")")
+test.add("Added")
+print(">>>Resulting in")
+print(test.data)
+print("I will now use .add_first(\"First\")")
+test.add_first("First")
+print(">>>Resulting in")
+print(test.data)
+print("I will now use .remove_head()")
 test.remove_head()
+print(">>>Resulting in")
 print(test.data)
-test.add_first(None)
-print(test.data)
-test.add(None)
-test.add("Hello")
-print(test.data)
-# object = "hello"
+
+
+
+# print(test.data)
+# test.add(None)
+# print("=" * 25)
+# print(test.data)
+# print("=" * 25)
+#
+# test.add_first(None)
+# print(test.data)
+# print("Removing Head")
+# test.remove_head()
+# print(test.data)
+# test.add_first(None)
+# print(test.data)
+# test.add(None)
+# test.add("Hello")
+# print(test.data)
+# # object = "hello"
 #
 # print(id(object))
 #
@@ -110,4 +136,3 @@ print(test.data)
 # print(nodes)
 # for object, pointer in nodes:
 #     print(f"{object} @ {pointer}")
-

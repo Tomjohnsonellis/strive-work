@@ -66,9 +66,6 @@ class linked_list:
                 ["second_dummy_object", None]
             ]
 
-    def rebuild_links(self):
-        pass
-
     def add(self, object=None):
         # Adds a node at the end
         if object:
@@ -129,40 +126,16 @@ class linked_list:
                     # Return back as we are only removing one element
                     return
 
-
-
     def remove_all(self, element=None):
         if element:
-            print(len(self.data))
-            # while True:
+            # This is a lazy solution, but seems to work fine
             for item in range(len(self.data)):
                 try:
                     self.remove(element)
                 except:
-                    print("Ok.")
+                    break
 
 
-
-
-# print("#"*25)
-# print("#"*25)
-# print("START")
-# print("#"*25)
-# print("#"*25)
-# test = linked_list(["I am a list of one element"])
-# print(test.data)
-# print(">>>>>I will now use .add(\"Added\")")
-# test.add("Added")
-# print(">>>Resulting in:")
-# print(test.data)
-# print(">>>>>I will now use .add_first(\"First\")")
-# test.add_first("First")
-# print(">>>Resulting in:")
-# print(test.data)
-# print(">>>>>I will now use .remove_head()")
-# test.remove_head()
-# print(">>>>>Resulting in:")
-# print(test.data)
 def test_method(command):
     # This would be nice so that I just iterate through a list of commands like [.add(5), .remove_head()]
     # No idea how to do that at the moment
@@ -224,8 +197,9 @@ def test_all(test_linked_list):
     show(test_linked_list)
 
 
-dummy_list = linked_list(["I am a list of one element"])
-test_all(dummy_list)
+if __name__ == '__main__':
+    dummy_list = linked_list(["I am a list of one element"])
+    test_all(dummy_list)
 
 ## Abandoned first draft
 # # object = "hello"

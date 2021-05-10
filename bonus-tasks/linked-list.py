@@ -135,6 +135,13 @@ class linked_list:
                 except:
                     break
 
+    def tostring(self):
+        stringlist = []
+        for node in self.data:
+            stringlist.append(node[0])
+        #print(str(stringlist))
+        return str(stringlist)
+
 
 def test_method(command):
     # This would be nice so that I just iterate through a list of commands like [.add(5), .remove_head()]
@@ -195,6 +202,10 @@ def test_all(test_linked_list):
     print(">>>>>I will now use remove_all(\"Dupes\")")
     test_linked_list.remove_all("Dupes")
     show(test_linked_list)
+    print("######################### To String")
+    final_test = test_linked_list.tostring()
+    print(final_test)
+    print(type(final_test))
 
 
 if __name__ == '__main__':

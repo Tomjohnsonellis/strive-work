@@ -7,9 +7,9 @@ Build a complete functional Linked_List class
 Methods Required:
         add(node): add a node in the end of the list
         add_first(node): adds a node to the beginning of the list
-    add_at(node, index): add a node in the given position
-    remove(E): removes the first node that contains that element
-    remove_all(E): remove every node that contains that element
+        add_at(node, index): add a node in the given position
+        remove(E): removes the first node that contains that element
+        remove_all(E): remove every node that contains that element
         remove_head(): removes the first element of the list
 
     Tostring: a native python method that makes it so when the list is printed it prints the
@@ -49,7 +49,7 @@ A pointer to the next node (memory location)
 class linked_list:
 
     def __init__(self, list_of_elements=None):
-        if type(list_of_elements)==list:
+        if type(list_of_elements) == list:
 
             self.data = [[list_of_elements[0], None]]
             if len(list_of_elements) >= 2:
@@ -66,20 +66,80 @@ class linked_list:
                 ["second_dummy_object", None]
             ]
 
+    def rebuild_links(self):
+        pass
+
     def add(self, object=None):
         # Adds a node at the end
         if object:
             self.data.append([object, None])
             self.data[-2][1] = id(object)
 
-    def add_first(self, object):
-        new_head = [object, id(self.data[0][1])]
-        self.data.insert(0, new_head)
+    def add_first(self, object=None):
+        if object:
+            # We need a pointer to the original head's data
+            new_head = [object, id(self.data[0][0])]
+            self.data.insert(0, new_head)
 
     def remove_head(self):
-        del self.data[0]
+        if len(self.data) > 1:
+            del self.data[0]
+        else:
+            print("That will delete me entirely!")
+
+    def add_at(self, object=None, index=0):
+        if object:
+            if index == 0:
+                self.add_first(object)
+            else:
+                # Split the data
+                before_data = self.data[:index]
+                after_data = self.data[index:]
+                # Update the pointer that we are affecting
+                before_data[-1][1] = id(object)
+                # Create a node to add, [data, pointer to next data]
+                node_to_insert = [object, id(after_data[0][0])]
+                # Put them all together
+                rebuilt_linked_list = before_data
+                rebuilt_linked_list.append(node_to_insert)
+                for node in after_data:
+                    rebuilt_linked_list.append(node)
+                self.data = rebuilt_linked_list
+
+    def remove(self, element=None):
+        if element:
+            for index, node in enumerate(self.data):
+                if node[0] == element and node[1] is not None:
+                    print("Match Found")
+                    # Split the data
+                    before_data = self.data[:index]
+                    after_data = self.data[index + 1:]
+                    # Update pointer before removed node
+                    before_data[-1][1] = id(after_data[0][0])
+                    # Rebuild
+                    rebuilt_linked_list = before_data
+                    for block in after_data:
+                        rebuilt_linked_list.append(block)
+                    self.data = rebuilt_linked_list
+                    # Return back as we are only removing one element
+                    return
+                if node[0] == element and node[1] is None:
+                    del self.data[-1]
+                    self.data[-1][1] = None
+                    # Return back as we are only removing one element
+                    return
 
 
+
+    def remove_all(self, element=None):
+        if element:
+            print(len(self.data))
+            # while True:
+            for item in range(len(self.data)):
+                try:
+                    self.remove(element)
+                except:
+                    print("Ok.")
 
 
 
@@ -110,6 +170,7 @@ def test_method(command):
     print(">>>>>Resulting in:")
     print("results")
 
+
 def show(linked_list):
     print(">>>>>Resulting in:")
     print(linked_list.data)
@@ -122,7 +183,7 @@ def test_all(test_linked_list):
     print("START")
     print("#" * 25)
     print("#" * 25)
-    #test_linked_list = linked_list(["I am a list of one element"])
+    # test_linked_list = linked_list(["I am a list of one element"])
     print(test_linked_list.data)
     print(">>>>>I will now use .add(\"Added\")")
     test_linked_list.add("Added")
@@ -133,7 +194,34 @@ def test_all(test_linked_list):
     print(">>>>>I will now use .remove_head()")
     test_linked_list.remove_head()
     show(test_linked_list)
-
+    print(">>>>>I will now use .add(\"Egg\")")
+    test_linked_list.add("Egg")
+    show(test_linked_list)
+    print(">>>>>I will now use .add(\"Spice\")")
+    test_linked_list.add("Spice")
+    show(test_linked_list)
+    print(">>>>>I will now use .add(1080)")
+    test_linked_list.add(1080)
+    show(test_linked_list)
+    print(">>>>>I will now use add_at('#INSERTED#', 3)")
+    test_linked_list.add_at("#INSERTED#", 3)
+    show(test_linked_list)
+    print(">>>>>I will now use .add(\"Dupes\")")
+    test_linked_list.add("Dupes")
+    show(test_linked_list)
+    print(">>>>>I will now use .add(\"Dupes\")")
+    test_linked_list.add("Dupes")
+    show(test_linked_list)
+    print(">>>>>I will now use .add(\"Dupes\")")
+    test_linked_list.add("Dupes")
+    show(test_linked_list)
+    print("######################### REMOVALS")
+    print(">>>>>I will now use remove(\"Dupes\")")
+    test_linked_list.remove("Dupes")
+    show(test_linked_list)
+    print(">>>>>I will now use remove_all(\"Dupes\")")
+    test_linked_list.remove_all("Dupes")
+    show(test_linked_list)
 
 
 dummy_list = linked_list(["I am a list of one element"])

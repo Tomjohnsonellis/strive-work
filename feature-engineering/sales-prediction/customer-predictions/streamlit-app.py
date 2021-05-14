@@ -12,7 +12,7 @@ st.markdown("This project was made possible thanks to [Graphext](https://www.gra
 st.write("Immediately we found that there is a clear divide in behaviours")
 st.image("sale.png")
 st.write("Something definitely separates the buyers from the window-shoppers, but what?")
-st.write("We'll get the most basic thing out the way, yes, seasons are important. Revolutionary information.")
+st.write("We'll get the most basic thing out the way, yes, seasons are important.")
 st.image("annualvolume.png")
 
 st.write("Graphext does some grunt work for us, tries to work out what's important")

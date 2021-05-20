@@ -20,3 +20,8 @@ if user_data is not None:
     st.write(prep.extract_accelerometer(file_contents))
     st.write(prep.extract_gyroscope(file_contents))
     st.write(prep.extract_gravity(file_contents))
+
+
+st.write("Todo: Combine these different dataframes into a big one")
+st.write("Add the target to those big dataframes")
+st.write("Train models with those")

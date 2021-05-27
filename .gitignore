@@ -16,4 +16,5 @@ intro-week/day4/test
 machine-learning/
 feature-engineering/intro/sub.csv
 feature-engineering/intro/catboost*
-
+feature-engineering/*
+mifit/*

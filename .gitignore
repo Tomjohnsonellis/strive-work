@@ -1,5 +1,5 @@
-*/MNIST_data*
-*/assets*
+image-recognition/MNIST_data
+image-recognition/assets
 */imgs*
 */*/__pycache__
 *.zip

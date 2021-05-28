@@ -1,3 +1,6 @@
+*/MNIST_data*
+*/assets*
+*/imgs*
 */*/__pycache__
 *.zip
 *.save

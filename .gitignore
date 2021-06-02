@@ -21,3 +21,4 @@ feature-engineering/intro/sub.csv
 feature-engineering/intro/catboost*
 feature-engineering/*
 mifit/*
+*/data

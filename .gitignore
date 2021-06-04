@@ -1,5 +1,6 @@
 image-recognition/MNIST_data
 image-recognition/assets
+deep-learning/wandb/
 */imgs*
 */*/__pycache__
 *.zip
@@ -22,3 +23,5 @@ feature-engineering/intro/catboost*
 feature-engineering/*
 mifit/*
 */data
+*.model
+

@@ -29,7 +29,7 @@ def simple_perceptron(input_one, input_two, output):
     # If our perceptron is incorrect, error will be 1 so a change will happen
     # If our perceptron is correct, error will be 0 so nothing happens
     error = output - perceptron_output
-    # Update each weight as necessary
+    # Update each weight as necessary, the learning rate also determines how much by
     if error:
         weights[0] += error * input_one * learning_rate
         weights[1] += error * input_two * learning_rate

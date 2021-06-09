@@ -46,3 +46,12 @@ This is a collection of the work I have done while attending the Strive School A
     - Data Augmentation
     - Feature Construction
     
+[Deep Learning](https://github.com/Tomjohnsonellis/strive-work/tree/main/deep-learning)
+
+    - PyTorch
+    - Perceptrons
+    - Multi-Layered perceptrons
+    - Convolutional Neural Networks
+    - Recurrent Neural Networks
+    - Transfer Learning
+    - nVidia CUDA

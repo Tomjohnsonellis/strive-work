@@ -55,3 +55,9 @@ This is a collection of the work I have done while attending the Strive School A
     - Recurrent Neural Networks
     - Transfer Learning
     - nVidia CUDA
+
+[Computer Vision](https://github.com/Tomjohnsonellis/strive-work/tree/main/computer-vision)
+
+    - Image annotating
+    - Colour Channels
+    - CONT

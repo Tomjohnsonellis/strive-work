@@ -37,3 +37,12 @@ This is a collection of the work I have done while attending the Strive School A
     - Principal component analysis
     - K-means Clustering
     - Decision Trees
+    
+[Feature Engineering](https://github.com/Tomjohnsonellis/strive-work/tree/main/machine-learning)
+
+    - Exploratory Data Analysis (EDA)
+    - Pipelines
+    - Hyperparameter Optimisation with Grid Search
+    - Data Augmentation
+    - Feature Construction
+    

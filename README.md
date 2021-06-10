@@ -37,3 +37,27 @@ This is a collection of the work I have done while attending the Strive School A
     - Principal component analysis
     - K-means Clustering
     - Decision Trees
+    
+[Feature Engineering](https://github.com/Tomjohnsonellis/strive-work/tree/main/machine-learning)
+
+    - Exploratory Data Analysis (EDA)
+    - Pipelines
+    - Hyperparameter Optimisation with Grid Search
+    - Data Augmentation
+    - Feature Construction
+    
+[Deep Learning](https://github.com/Tomjohnsonellis/strive-work/tree/main/deep-learning)
+
+    - PyTorch
+    - Perceptrons
+    - Multi-Layered perceptrons
+    - Convolutional Neural Networks
+    - Recurrent Neural Networks
+    - Transfer Learning
+    - nVidia CUDA
+
+[Computer Vision](https://github.com/Tomjohnsonellis/strive-work/tree/main/computer-vision)
+
+    - Image annotating
+    - Colour Channels
+    - CONT

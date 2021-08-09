@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'misc/hackathon/react';
 import ReactDOM from 'react-dom';
 
 class Test extends React.Component {

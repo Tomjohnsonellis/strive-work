@@ -1,3 +1,10 @@
+### What was this?
+I attended a hackathon back in May 2021 and made some preperation notes for it, overall it was a pretty enjoyable experience!
+<br> I'd definitely reccomend going to one just for the experience of it, you might get some freebies out of it as well!
+<br> *Submission viewable [here](https://devpost.com/software/cool-team)*
+
+
+
 # HackUPC Hackathon Notes
 
 `May 14th  18:00 -> May 16th 16:00 (GMT)`

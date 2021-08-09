@@ -61,3 +61,12 @@ This is a collection of the work I have done while attending the Strive School A
     - Image annotating
     - Colour Channels
     - CONT
+
+
+[Misc work](https://github.com/Tomjohnsonellis/strive-work/tree/main/misc)
+
+    - Random programming tasks
+    - Link to first build week project
+    - Hackathon notes (HackUPC 2021)
+    - Movie Colours work
+    - Abandoned project

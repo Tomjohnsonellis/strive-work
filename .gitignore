@@ -21,7 +21,7 @@ machine-learning/
 feature-engineering/intro/sub.csv
 feature-engineering/intro/catboost*
 feature-engineering/*
-mifit/*
+misc/mifit/*
 */data
 *.model
 

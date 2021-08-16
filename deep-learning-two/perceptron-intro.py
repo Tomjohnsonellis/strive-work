@@ -48,6 +48,7 @@ titanic = (x1[0] * w1) + (x2[0] * w2) + (x3[0] * w3) + b
 print(f'Titanic\'s score: {titanic}')
 
 
+
 # This number is neither 0 or 1, but we can use an activation function to map the result to one of those values!
 # We will use a very basic one here, if the result was positive we map it to 1, otherwise we'll map it to 0
 def activation(result):
@@ -78,4 +79,71 @@ print(f"Did we enjoy this film?: {activation(titanic)}")
 # We will introduce a learning rate so that we can make much finer adjustments
 learning_rate = 0.1
 # Applying it to the formula gives us
-# w(new) = w(old) + (error * data)
+# w(new) = w(old) + (learning_rate * error * data)
+
+
+# What now?
+# We will now go through our dataset and tweak the weights as needed for each sample
+# Then we will do that all over again and repeat until the perceptron is always right
+# After that we can test it on some new data and see what its prediction is!
+
+# Let's compact what we did
+learning_rate = 0.2
+# this is just the same data as above in a single data structure, outcomes are the digit outside the array
+data = [
+    (np.array([0,1,1]), 1),
+    (np.array([1,0,0]), 1),
+    (np.array([0,1,0]), 0),
+    (np.array([1,0,0]), 1),
+    (np.array([0,1,1]), 1),
+]
+# Train on everything but the last sample
+training_data = data[:-1]
+# The last sample is our test
+test_data = data[-1]
+# Initialise weights at zero or random
+weights = np.zeros(3)
+weights = np.random.rand(3)
+bias = 0
+# To prevent endless training
+max_iterations = 10
+
+def perceptron(train, weights, bias, learning_rate, max_iterations):
+    current_iteration = 0
+    print("=== PERCEPTRON ===")
+    print(f"Current weights: {weights}")
+    print(f"Current bias: {bias}")
+    while current_iteration < max_iterations:
+        new_weights = weights
+        new_bias = bias
+        for sample in train:
+            # sample[0] is the data, sample[1] is the outcome
+            output = np.dot(weights, sample[0]) + bias
+            output = activation(output) # Make it 0 or 1
+
+            if (sample[1] - output) != 0: # If we have an error
+                # Update the weights and bias
+                weights += learning_rate * (sample[1] - output)*sample[0]
+                bias += learning_rate * (sample[1] - output)
+                print(f"Weights updated to: {weights}")
+                print(f"Bias updated to: {bias}")
+
+        # We can check to see if we have converged
+        if new_weights.all() == weights.all() and new_bias == bias:
+            print(f"We have converged! Iteration {current_iteration+1}")
+            break
+        current_iteration += 1
+
+    return weights, bias
+
+# To see this in action...
+weights, bias = perceptron(training_data, weights, bias, learning_rate, max_iterations)
+movie_titles = ['Titanic', 'Avengers: Endgame', 'I still believe', 'Spiderman']
+for i, sample in enumerate(training_data):
+    output = np.dot(weights, sample[0]) + bias
+    print(movie_titles[i], "prediction:", int(output>0), "actual:", sample[1])
+
+# Nice! Now we can finally use it to predict if we would like a movie...
+chocolat = np.array([1,0,1])
+output = np.dot(weights, chocolat) + bias
+print(f"The perceptron's prediction for us enjoying the film is: {output>0}")

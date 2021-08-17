@@ -87,7 +87,6 @@ print("=" * 50)
 X = torch.rand([1000, 10]).float()  # Our 'Data'
 y = torch.randint(0, 2, [1000]).float()  # Our 'Labels'
 y_actual_values = y.view(1000, 1)  # Reshape so the labels are each in their own 1-D tensor
-
 # Make some predictions with our model...
 y_predictions = simple_net(X)
 # Use the loss function to calculate how well/badly the model did
@@ -99,7 +98,7 @@ print(f"The first loss value: {loss_value.item():.4f}")
 
 def train_our_simple_network(data, labels, our_model, some_loss_function, some_learning_rate, number_of_epochs):
     # Typical practice is to define the optimiser inside the training function, as that is where it will be used
-    optimiser = torch.optim.Adam(simple_net.parameters(), lr=some_learning_rate)
+    optimiser = torch.optim.Adam(our_model.parameters(), lr=some_learning_rate)
     for epoch in range(number_of_epochs):
         optimiser.zero_grad() # This just ensures that we recalculate the gradients from scratch each epoch
         label_predictions = our_model(data) # Make some predictions
@@ -113,3 +112,4 @@ def train_our_simple_network(data, labels, our_model, some_loss_function, some_l
 
 trained_network = train_our_simple_network(X, y_actual_values, simple_net, nn.BCELoss(), 0.25, 10)
 # Nice! We have now built and trained a basic neural network in PyTorch!
+print(X.size())

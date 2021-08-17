@@ -82,4 +82,34 @@ loss_function = nn.BCELoss()
 # https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/
 optimiser = torch.optim.Adam(simple_net.parameters(), lr=0.1)
 
+# Let's train it on some utterly random data
+print("=" * 50)
+X = torch.rand([1000, 10]).float()  # Our 'Data'
+y = torch.randint(0, 2, [1000]).float()  # Our 'Labels'
+y_actual_values = y.view(1000, 1)  # Reshape so the labels are each in their own 1-D tensor
 
+# Make some predictions with our model...
+y_predictions = simple_net(X)
+# Use the loss function to calculate how well/badly the model did
+loss_value = loss_function(y_predictions, y_actual_values)
+print(f"The first loss value: {loss_value.item():.4f}")
+# Great, we now have a neural network that can make predictions, and we have a way to score those predictions!
+# Next up, we can improve those predictions by training the network
+
+
+def train_our_simple_network(data, labels, our_model, some_loss_function, some_learning_rate, number_of_epochs):
+    # Typical practice is to define the optimiser inside the training function, as that is where it will be used
+    optimiser = torch.optim.Adam(simple_net.parameters(), lr=some_learning_rate)
+    for epoch in range(number_of_epochs):
+        optimiser.zero_grad() # This just ensures that we recalculate the gradients from scratch each epoch
+        label_predictions = our_model(data) # Make some predictions
+        loss_value = some_loss_function(label_predictions, labels)  # Calculate how good they were
+
+        print(f"Epoch {epoch + 1}: Loss = {loss_value}")
+
+        loss_value.backward() # Adjust the network accordingly
+        optimiser.step() # Updates our parameters
+    return our_model
+
+trained_network = train_our_simple_network(X, y_actual_values, simple_net, nn.BCELoss(), 0.25, 10)
+# Nice! We have now built and trained a basic neural network in PyTorch!

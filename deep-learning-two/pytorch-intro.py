@@ -112,4 +112,12 @@ def train_our_simple_network(data, labels, our_model, some_loss_function, some_l
 
 trained_network = train_our_simple_network(X, y_actual_values, simple_net, nn.BCELoss(), 0.25, 10)
 # Nice! We have now built and trained a basic neural network in PyTorch!
-print(X.size())
+
+print("=-"*20)
+# Bonus: To view the model's weights and bias we can use:
+print("All Parameters:")
+print(list(trained_network.parameters()))
+# And even focus on a particular layer
+print("=-"*20)
+print("Just some:")
+print(list(trained_network.second_linear_calculation.parameters()))

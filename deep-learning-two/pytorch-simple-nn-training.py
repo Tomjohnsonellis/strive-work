@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import torch.nn as nn
 
-data = pd.read_csv("workbooks/data.csv", header=None)
+data = pd.read_csv("work-in-progress/data.csv", header=None)
 X = data.drop(2, axis=1).values
 y = data[2].values
 X = torch.from_numpy(X).float()

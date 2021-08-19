@@ -1,0 +1,7 @@
+path,label
+simple_dataset/train/Banana/1.jpg,0
+simple_dataset/train/Banana/2.jpg,0
+simple_dataset/train/Strawberry/3.jpg,1
+simple_dataset/train/Strawberry/1.jpg,1
+simple_dataset/train/Watermelon/5.jpg/2
+simple_dataset/train/Watermelon/6.jpg/2

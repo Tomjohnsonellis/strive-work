@@ -192,3 +192,35 @@ An example of a .csv :
 1   my_dataset/image2.png       1
 """
 
+# Time to make another dataloader
+# We'll need this for this specific loader
+from PIL import Image
+class MessyDataLoader(Dataset):
+    # Constructor, what do we want this to do on creation?
+    def __init__(self, csv_file):
+        df = pd.read_csv(csv_file)
+        # We are assuming the csv has certain column names
+        self.paths = df.path.values
+        self.labels = df.label.values
+    # Let's include the preferred way to index like before
+    def __getitem__(self, index):
+        # Grab the image + label at a certain index
+        img = Image.open(self.paths[index]).convert("RGB")
+        return img, self.labels[index]
+    # Length as well, just for fun
+    def __len__(self):
+        return len(self.paths)
+
+split_section(4)
+print(os.getcwd())
+os.chdir("../strive-work/deep-learning-two")
+print(os.getcwd())
+data = MessyDataLoader("image_paths.csv")
+print("Data has been loaded")
+
+print("Attempting to display image...")
+os.chdir("../../datasets")
+image_and_label = data.__getitem__(0)
+an_image = data.__getitem__(3)[0]
+print(an_image)
+an_image.show()

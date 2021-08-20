@@ -18,10 +18,10 @@ import random
 # First of all we will need the data
 data = [[1, 1], [0, 1], [1, 0], [0, 0]]
 outputs = [1, 0, 0, 0]
-# As our data has two inputs, we will need that many weights + 1 for the bias, so 3
-weights = [random.random(), random.random(), random.random()]
-# We will also need a bias, I've used a random number but feel free to choose something else like 1
-bias = random.random()
+# As our data has two inputs, we will need that many weights, so 2
+weights = [random.random(), random.random()]
+# We will also need a bias, I've used 1 but feel free to choose something else like a random number
+bias = 1
 
 
 # We'll use a really simple activation function in our perceptron called "Heaviside"
@@ -35,7 +35,7 @@ def test_perceptron(input_one, input_two, output, weights_vector, bias):
     perceptron_score = \
         input_one * weights_vector[0] \
         + input_two * weights_vector[1] \
-        + bias * weights_vector[2]
+        + bias
 
     result = activation_function(perceptron_score)
 
@@ -65,12 +65,12 @@ learning_rate = 1
 # y is the label for a data sample
 # W for weights, b for bias
 # lr or alpha for learning rate
-def train_perceptron(X, y, W, b, alpha=1):
+def train_perceptron(X, y, W, b, alpha=0.1):
     for data, label in zip(X, y):
         perceptron_score = \
             data[0] * W[0] \
             + data[1] * W[1] \
-            + b * W[2]
+            + b
 
         result = activation_function(perceptron_score)
         # We only need to adjust the weights if the perceptron is wrong
@@ -78,15 +78,16 @@ def train_perceptron(X, y, W, b, alpha=1):
         if error:
             W[0] += error * data[0] * alpha
             W[1] += error * data[1] * alpha
-            W[2] += error * b * alpha
+            b += error * alpha
             print(f"Updated weights to: {W}")
+            print(f"Bias updated to: {b}")
 
-    return W
+    return W, b
 
 
 # Let's train it!
 for i in range(10):
-    weights = train_perceptron(data, outputs, weights, bias, learning_rate)
+    weights, bias = train_perceptron(data, outputs, weights, bias, learning_rate)
 
 # And test it again...
 test_all(data, outputs, weights, bias)

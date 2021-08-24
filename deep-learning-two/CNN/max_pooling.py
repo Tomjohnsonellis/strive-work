@@ -55,7 +55,7 @@ def pixellate(jpg_or_png_path:str, kernel_size:int=25, stride:int=25) -> None:
 
 if __name__ == '__main__':
    
-    pixellate("deep-learning-two/CNN/fruits2.jpg")
+    pixellate("deep-learning-two/CNN/swirls.jpg", 50, 50)
 
 
     # Old code, it has now been refactored into pixellate()

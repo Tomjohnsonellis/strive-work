@@ -98,8 +98,14 @@ class CDNet(nn.Module):
         self.fc3 = nn.Linear(84,2)
 
     def forward(self, x):
+        pass
 
 
 
 
+if __name__ == '__main__':
+    image = iter(test_loader).next()
+    print(image[0])
+    # image=image.squeeze(0)
+    # plt.imshow(image)
 

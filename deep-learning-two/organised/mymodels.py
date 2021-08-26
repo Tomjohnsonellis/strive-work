@@ -1,4 +1,5 @@
 from torch import nn
+import torch.nn.functional as F
 
 # This is a model specific for an insurance price task, the data has 10 dimensions
 class InsurancePriceNN(nn.Module):
@@ -83,17 +84,31 @@ class ConvNet(nn.Module):
 
 
 
-class BinaryClassifier(nn.Module):
+class SimpleBinaryClassifier(nn.Module):
     def __init__(self, input_size=1024):
         super().__init__()
-        self.LayerOne = nn.Sequential(input_size, 128)
-        self.activation = nn.ReLU()
-        self.LayerTwo = nn.Sequential(128, 32)
-        self.FinalLayer = nn.Sequential(32,2)
+        self.LayerOne = nn.Linear(input_size, 128)
+        self.LayerTwo = nn.Linear(128, 2)
 
     def forward(self, x):
-        x = self.activation(self.LayerOne(x))
-        x = self.activation(self.LayerTwo(x))
-        x = self.FinalLayer(x)
+        x = self.LayerOne(x)
+        x = F.relu(x)
+        x = self.LayerTwo(x)
         x = F.log_softmax(x, dim=1)
         return x
+
+class DropoutNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.FullCon1 = nn.Linear(1024, 128)
+        self.FullCon2 = nn.Linear(128, 2)
+
+    def forward(self, x):
+        x = F.relu(self.FullCon1)
+        x = F.dropout(x)
+        x = self.FullCon2(x)
+        x = F.dropout(x)
+        x = F.log_softmax(x, dim=1)
+        return x
+
+egg = SimpleBinaryClassifier()

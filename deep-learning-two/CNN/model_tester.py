@@ -12,7 +12,13 @@ def train_further(model) -> ConvNet:
 
 if __name__ == '__main__':
     model = torch.load("catdog.pt")
-    train_further(model)
-    make_a_prediction(model)
+    # train_further(model)
+    # make_a_prediction(model)
 
-    # validate(model)
+
+    validate(model)
+
+# import os
+# print(os.getcwd())
+# os.chdir("../../vscode/datasets/cats_and_dogs")
+# print(os.getcwd())

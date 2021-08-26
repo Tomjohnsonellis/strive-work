@@ -42,7 +42,8 @@ testing_transformations = transforms.Compose([
     transforms.Normalize(*normalisation_params),
 ])
 
-data_dir = ("../datasets/cats_and_dogs")
+data_dir = ("../datasets/cats_and_dogs") # Linux
+data_dir = "../../vscode/datasets/cats_and_dogs" # Windows
 train_data = datasets.ImageFolder(data_dir + "/train", transform=training_transformations)
 test_data = datasets.ImageFolder(data_dir + "/test", transform=testing_transformations)
 
@@ -176,9 +177,9 @@ class ConvNet(nn.Module):
 
 
 def training_loop(model):
-    training_epochs = 5
+    training_epochs = 2
     print_every = 10
-    optimiser = torch.optim.Adam(model.parameters(), lr=0.1)
+    optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
     loss_function = nn.NLLLoss()
 
     for epoch in range(training_epochs):
@@ -242,12 +243,14 @@ def validate(model):
             class_guess = probabilities.topk(1, dim=1)[1].flatten()
             # print(class_guess.shape)
             # print(test_labels.shape)
-            scores = test_labels - class_guess
-            for score in scores:
-                if score == 0:
+            # scores = test_labels - class_guess
+            for model_guess, actual_label in zip(class_guess, test_labels):
+                print(f"Model: {model_guess} --- Actual: {actual_label}")
+                if model_guess == actual_label:
                     correct += 1
                 else:
                     incorrect += 1
+
 
             accuracy = (correct / (correct + incorrect)) * 100
             print(f"Currect accuracy: {accuracy}\n-->{correct} / {correct + incorrect}")
@@ -259,15 +262,17 @@ def validate(model):
 
 
 if __name__ == "__main__":
-    # net = ConvNet()
-    # display_classifier(net)
-    # After all that, it is time to train the network.
-    # trained = training_loop(net)
-    # torch.save(trained, "catdog.pt")
-    # display_classifier(trained)
 
-    net = torch.load("catdog.pt")
+    # print(torch.cuda.is_available())
+
+    net = ConvNet()
     display_classifier(net)
+    trained = training_loop(net)
+    torch.save(trained, "catdogtwo.pt")
+    display_classifier(trained)
+
+    # net = torch.load("catdog.pt")
+    # display_classifier(net)
 
     # validate(net)
 

@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import torch
+from torch.nn.modules.loss import CrossEntropyLoss
 from torchvision import datasets, transforms
 import numpy as np
 import torch.nn as nn
@@ -138,20 +139,20 @@ class ConvNet(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 2)
 
-    def forward(self, x):
-        print(f"Inital input size: {x.shape}")
+    def forward(self, x, verbose=False):
+        if verbose: print(f"Inital input size: {x.shape}")
         x = self.conv1(x)
-        print(f"Size after conv1: {x.shape}")
+        if verbose: print(f"Size after conv1: {x.shape}")
         x = F.relu(x)
         x = self.pool(x)
-        print(f"Size after pool: {x.shape}")
+        if verbose: print(f"Size after pool: {x.shape}")
         # Same as above but in more compact code
         # x = self.pool(F.relu(self.conv1(x)))
         x = self.conv2(x)
-        print(f"Size after conv2: {x.shape}")
+        if verbose: print(f"Size after conv2: {x.shape}")
         x = F.relu(x)
         x = self.pool(x)
-        print(f"Size after pool: {x.shape}")
+        if verbose: print(f"Size after pool: {x.shape}")
 
 
         # A convolutional layer's outputs are a 3D volume,
@@ -159,21 +160,84 @@ class ConvNet(nn.Module):
         # For example: (32, 16 x 5 x 5)
         
         x = x.view(x.shape[0], -1)
-        print(f"Size after resizing: {x.shape}")
+        if verbose: print(f"Size after resizing: {x.shape}")
         # We will now give this to the boring old linear neurons
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         # And finally put the output in an easier to use form
         x = F.log_softmax(x, dim=1)
+        # x = F.softmax(x)
         return x
+
+
+def training_loop(model):
+    training_epochs = 5
+    print_every = 10
+    optimiser = torch.optim.Adam(model.parameters(), lr=0.1)
+    loss_function = nn.NLLLoss()
+
+    for epoch in range(training_epochs):
+        running_loss = 0
+        print(f"Epoch {epoch+1} / {training_epochs}")
+
+        for cycle, (images, labels) in enumerate(iter(train_loader)):
+            # Flatten the images for our network
+            # images = images.reshape(16, 784)
+            # print("="*50)
+            # print(labels)
+            # print("="*50)
+            # index = 0
+            # for l in labels:
+            #     if l == 0:
+            #         labels[index] = torch.Tensor([[0][1]])
+            #         index += 1
+            #     if l == 1:
+            #         labels[index] = torch.Tensor([[1][0]])
+            #         index += 1
+
+
+            # Zero out the gradients
+            optimiser.zero_grad()
+            # Make a guess by passing an image forward through the network
+            model_guess = model.forward(images)
+            # model_guess = model_guess.topk(1,dim=1)[1].int()
+            # Calculate how good/bad that guess is
+            # print("-"*50)
+            # # print(model_guess.topk(1,dim=1))
+            # # model_guess = model_guess.topk(1,dim=1)
+            # # model_guess = model_guess[0].flatten()
+            # # print(model_guess)
+            # print("-"*50)
+            loss_value = loss_function(model_guess, labels)
+            # print(loss_value)
+            # Backpropogate to see how we need to adjust the weights
+            loss_value.backward()
+            # Adjust the weights
+            optimiser.step()
+
+            # Keep track of the loss for our human eyes to see
+            running_loss += loss_value.item()
+
+            if cycle % print_every == 0:
+                print(f"Training cycle: {cycle}\t Avg. Loss: {running_loss/print_every:.4f}")
+                running_loss = 0
+
+    return model
+
 
 
 
 if __name__ == "__main__":
     net = ConvNet()
-    display_classifier(net)
-    # display_train_image()
+    # display_classifier(net)
+    # After all that, it is time to train the network.
+    trained = training_loop(net)
+    torch.save(trained, "catdog.pt")
+    display_classifier(trained)
+
+
+
     
 
 

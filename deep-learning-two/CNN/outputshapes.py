@@ -130,9 +130,19 @@ print(f"After fc3, the shape is now: {one_batch_of_images.shape}")
 print("Applying softmax...")
 one_batch_of_images = F.softmax(one_batch_of_images, dim=1)
 print(f"After softmax, the shape is now: {one_batch_of_images.shape}")
-# print(one_batch_of_images)
+print(one_batch_of_images)
+
+# # Let's sigmoid the outputs
+# one_batch_of_images = one_batch_of_images.sigmoid()
+
+
+
+
 print("The images have been turned into our model's predictions for each class!")
 print(f"Example: {one_batch_of_images[5]}")
+# We only want the most confident prediction for loss
+# one_batch_of_images = one_batch_of_images.topk(1, dim=1)
+# print(one_batch_of_images[1])
 
 
 """

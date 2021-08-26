@@ -5,6 +5,7 @@ from torchvision import datasets, transforms
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
+import random
 
 # import os
 # print(os.getcwd())
@@ -79,7 +80,7 @@ def view_classify_general(img, ps, class_list):
     ''' Function for viewing an image and it's predicted classes.
     '''
     ps = ps.data.numpy().squeeze()
-
+    # print(ps)
     fig, (ax1, ax2) = plt.subplots(figsize=(6,9), ncols=2)
     imshow(img, ax=ax1, normalize=True)
     ax1.axis('off')
@@ -104,15 +105,18 @@ def display_train_image():
     return
 
 def display_classifier(network):
-    images, labels = next(iter(train_loader))
-    img, label = images[0], labels[0]
+    random.seed()
+    random_index = random.randint(0,20)
+
+    images, labels = next(iter(test_loader))
+    img, label = images[random_index], labels[random_index]
 
     # Forward pass, get our logits
-    logits = network(img.view(1, *images[0].shape))
+    logits = network(img.view(1, *images[5].shape))
     # logits = network(img.unsqueeze(0))
     # Calculate the loss with the logits and the labels
     print("@"*50)
-    print(logits)
+    print(torch.exp(logits))
 
     ps = torch.exp(logits)
     view_classify_general(img, ps, class_list)
@@ -226,15 +230,46 @@ def training_loop(model):
     return model
 
 
+def validate(model):
+    model.eval()
+    correct = 0
+    incorrect = 0
+    with torch.no_grad():
+        for test_images, test_labels in iter(test_loader):
+            # Make a prediction, see if it's correct, keep a record
+            model_output = model.forward(test_images)
+            probabilities = torch.exp(model_output)
+            class_guess = probabilities.topk(1, dim=1)[1].flatten()
+            # print(class_guess.shape)
+            # print(test_labels.shape)
+            scores = test_labels - class_guess
+            for score in scores:
+                if score == 0:
+                    correct += 1
+                else:
+                    incorrect += 1
+
+            accuracy = (correct / (correct + incorrect)) * 100
+            print(f"Currect accuracy: {accuracy}\n-->{correct} / {correct + incorrect}")
+
+    print(f"Final accuracy: {accuracy}")
+    model.train()
+    return accuracy
+
 
 
 if __name__ == "__main__":
-    net = ConvNet()
+    # net = ConvNet()
     # display_classifier(net)
     # After all that, it is time to train the network.
-    trained = training_loop(net)
-    torch.save(trained, "catdog.pt")
-    display_classifier(trained)
+    # trained = training_loop(net)
+    # torch.save(trained, "catdog.pt")
+    # display_classifier(trained)
+
+    net = torch.load("catdog.pt")
+    display_classifier(net)
+
+    # validate(net)
 
 
 

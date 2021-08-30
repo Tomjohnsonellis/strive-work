@@ -19,9 +19,10 @@ def annotate_quadrangle(image_array, points_for_quadrangle, thickness=5):
     cv2.line(image_with_quadrangle, points_for_quadrangle[3], points_for_quadrangle[0], (255,128,255), thickness)
     return image_with_quadrangle
 
-def draw_text_with_border(image, text, x_pos=25, y_pos=25, text_size=60, location=None, border_size=4):
+def draw_text_with_border(image, text, font, x_pos=25, y_pos=25, location=None, border_size=4):
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("computer-vision-two/assets/impact.ttf", text_size)
+    font = font
+    # font = ImageFont.truetype("computer-vision-two/assets/impact.ttf", font)
     # We can use PIL to calculate the size of the text block
     text_w, text_h = draw.textsize(text, font)
     # print(f"W: {text_w}\nH: {text_h}")

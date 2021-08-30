@@ -30,9 +30,9 @@ horizontal_line_points = [(0, h/2), (w, h/2)]
 draw.line(horizontal_line_points, fill=(255,0,0), width=1)
 
 
-img = helper_functions.draw_text_with_border(img, "Hello", location=None)
-img = helper_functions.draw_text_with_border(img, "I am bottom text", location="bottom")
-img = helper_functions.draw_text_with_border(img, "Top of the image", location="top")
+img = helper_functions.draw_text_with_border(img, "Center", font, location=None)
+img = helper_functions.draw_text_with_border(img, "I am bottom text", font, location="bottom")
+img = helper_functions.draw_text_with_border(img, "Top of the image", font, location="top")
 
 
 img.save("computer-vision-two/assets/meme_with_text.jpg")

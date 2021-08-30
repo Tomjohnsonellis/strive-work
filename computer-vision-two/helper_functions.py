@@ -50,10 +50,10 @@ def draw_text_underneath(text, x_pos, y_pos, draw, font, border_size):
     font = font
     border_size = border_size
     # Draw the same text in black slightly offset in each direction
-    draw.text(xy=(x_pos-border_size, y_pos), text=text, font=font, align='center', fill=(0,0,0))
-    draw.text(xy=(x_pos+border_size, y_pos), text=text, font=font, align='center', fill=(0,0,0))
-    draw.text(xy=(x_pos, y_pos-border_size), text=text, font=font, align='center', fill=(0,0,0))
-    draw.text(xy=(x_pos, y_pos+border_size), text=text, font=font, align='center', fill=(0,0,0))
+    draw.text(xy=(x_pos-border_size, y_pos-border_size), text=text, font=font, align='center', fill=(0,0,0))
+    draw.text(xy=(x_pos-border_size, y_pos+border_size), text=text, font=font, align='center', fill=(0,0,0))
+    draw.text(xy=(x_pos+border_size, y_pos-border_size), text=text, font=font, align='center', fill=(0,0,0))
+    draw.text(xy=(x_pos+border_size, y_pos+border_size), text=text, font=font, align='center', fill=(0,0,0))
     # Draw the actual text
     draw.text(xy=(x_pos, y_pos), text=text, font=font, align='center', fill=(255,255,255))
     return

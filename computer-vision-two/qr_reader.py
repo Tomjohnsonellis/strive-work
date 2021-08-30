@@ -22,12 +22,6 @@ print("="*50)
 #print(points.shape)
 points = points[0].astype(int)
 print(points)
-# We can use the points to draw lines
-# thickness = 5
-# cv2.line(image_with_qr, points[0], points[1], (0,0,255), thickness)
-# cv2.line(image_with_qr, points[1], points[2], (255,0,0), thickness)
-# cv2.line(image_with_qr, points[2], points[3], (0,255,0), thickness)
-# cv2.line(image_with_qr, points[3], points[0], (255,128,255), thickness)
 
 QR_box = annotate_quadrangle(image_with_qr, points)
 

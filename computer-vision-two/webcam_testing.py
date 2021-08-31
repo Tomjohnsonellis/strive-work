@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 webcam_video = cv2.VideoCapture(0)
 
@@ -30,31 +31,21 @@ while(True):
     4
     )
 
-    # cv2.ellipse(frame,
-    # (300,50),
-    # )
-    
-    
-    # cv2.putText(frame, 
-    # ">>>TOM>>>", 
-    # (50,225),
-    # 0,
-    # 2,
-    # (0,255,0)
-    # )
+    # See if we can detect reds
+    low_b = (-15, 0, 0)
+    high_b = (15, 255, 255)
 
-    # cv2.putText(frame, 
-    # "<<<TOM<<<", 
-    # (300,225),
-    # 0,
-    # 2,
-    # (0,255,0)
-    # )
 
-    
-    cv2.imshow("It's a me", frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    cv2.imshow("HSV", hsv)
+    cv2.imshow("BGR", frame)
+
+    combo = np.concatenate((frame, hsv), axis=1)
+    cv2.imshow("Combo", combo)
+
+    if cv2.waitKey(1) == ord('q'):
         break
 
 

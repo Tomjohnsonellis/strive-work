@@ -12,7 +12,7 @@ while(True):
     ret, frame = webcam_video.read()
     # print(ret)
     
-
+    # Put some text on the screen pointing to me
     cv2.putText(frame, 
     "^^^TOM^^^", 
     (125,450),
@@ -31,19 +31,15 @@ while(True):
     4
     )
 
-    # See if we can detect reds
-    low_b = (-15, 0, 0)
-    high_b = (15, 255, 255)
-
-
 
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    cv2.imshow("HSV", hsv)
-    cv2.imshow("BGR", frame)
-
+    # cv2.imshow("HSV", hsv)
+    # cv2.imshow("BGR", frame)
+    
+    # Join the different colour spaced images together and display
     combo = np.concatenate((frame, hsv), axis=1)
-    cv2.imshow("Combo", combo)
+    cv2.imshow("BGR | HSV", combo)
 
     if cv2.waitKey(1) == ord('q'):
         break

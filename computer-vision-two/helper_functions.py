@@ -1,7 +1,9 @@
 import cv2
+import matplotlib.pyplot as plt
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+import numpy as np
 
 def display_image(image_array, image_name="My Image") -> None:
     cv2.imshow(image_name, image_array)
@@ -19,7 +21,7 @@ def annotate_quadrangle(image_array, points_for_quadrangle, thickness=5):
     cv2.line(image_with_quadrangle, points_for_quadrangle[3], points_for_quadrangle[0], (255,128,255), thickness)
     return image_with_quadrangle
 
-def draw_text_with_border(image, text, font, x_pos=25, y_pos=25, location=None, border_size=4):
+def draw_text_with_border(image, text, font, x_pos=25, y_pos=25, location=None, border_size=4) -> np.ndarray:
     draw = ImageDraw.Draw(image)
     font = font
     # font = ImageFont.truetype("computer-vision-two/assets/impact.ttf", font)
@@ -45,7 +47,7 @@ def draw_text_with_border(image, text, font, x_pos=25, y_pos=25, location=None, 
     return image
         
 
-def draw_text_underneath(text, x_pos, y_pos, draw, font, border_size):
+def draw_text_underneath(text, x_pos, y_pos, draw, font, border_size) -> None:
     draw = draw
     font = font
     border_size = border_size
@@ -58,5 +60,11 @@ def draw_text_underneath(text, x_pos, y_pos, draw, font, border_size):
     draw.text(xy=(x_pos, y_pos), text=text, font=font, align='center', fill=(255,255,255))
     return
 
-    # if location == "Bottom":
 
+def display_colour_histograms(some_image_in_BGR_form) -> None:
+    colours = ['b','g','r']
+    for i, colour in enumerate(colours):
+        hist = cv2.calcHist([some_image_in_BGR_form[:,:,i]] , [0], None, [256],[0,255])
+        plt.plot(hist, color=colour)
+    plt.show()
+    return

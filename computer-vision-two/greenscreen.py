@@ -17,8 +17,6 @@ while(True):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Reds in HSV space can be tricky, we'll use two masks
-    # lower_b = (-60, 0, 0)
-    # upper_b = (20, 255, 255)
     lower_b = (0, 0, 0)
     upper_b = (15, 255, 255)
     backdrop_mask = cv2.inRange(image, lower_b, upper_b)
@@ -29,10 +27,11 @@ while(True):
 
     detected_area = cv2.bitwise_and(image, image, mask=backdrop_mask)
     second_detected_area = cv2.bitwise_and(image, image, mask=second_backdrop_mask)
-    detections = np.concatenate((detected_area, second_detected_area), axis=1)
 
+    detections = np.concatenate((detected_area, second_detected_area), axis=1)
     reference_images = np.concatenate((frame, image), axis=1)
     comparison = np.concatenate((reference_images, detections), axis=0)
+    # Check each step
     cv2.imshow("Originals and Masks", comparison)
 
     double_masked_area = cv2.bitwise_and(image, image, mask=combined_mask)
@@ -43,7 +42,7 @@ while(True):
 
     # After all that, we now have the area that we want to replace (double_masked_area)
     # As well as the area we want to leave unaffected (scene_area)
-    # I'll go for an easy "Replace with red"
+    # I'll go for an easy "Replace with some colour"
     # For extension, I could see if I could replace it with an image,
     # But that will require some fiddling with resizing.
 
@@ -65,11 +64,6 @@ while(True):
 
     results = np.concatenate((repalcement_area_and_not, scenes_comparison), axis=0)
     cv2.imshow("FINAL", results)
-
-
-
-
-
 
 
     if cv2.waitKey(30) == ord('q'):

@@ -4,6 +4,7 @@ deep-learning/wandb/
 */imgs*
 **/__pycache__
 */__pycache__
+*/__pycache__/*
 *.zip
 *.save
 *.idea
@@ -26,3 +27,4 @@ misc/mifit/*
 */data
 *.model
 
+computer-vision-two/__pycache__/helper_functions.cpython-39.pyc

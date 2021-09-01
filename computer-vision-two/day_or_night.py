@@ -33,12 +33,11 @@ for name in filenames:
 day_images = images[:4]
 night_images = images[4:]
 
-
-for image in day_images:
-    print(image.mean())
+for i, image in enumerate(day_images):
+    print(f"{filenames[i]}: mean = {image.mean()}")
 print("~"*50)
 for image in night_images:
-    print(image.mean())
+    print(f"{filenames[i+4]}: mean = {image.mean()}")
 print("~"*50)
 
 # Just taking the mean of values shows a pretty big difference
@@ -46,25 +45,35 @@ print("~"*50)
 hsv = []
 for index, image in enumerate(images):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    print(image.mean())
+    print(f"HSV version of {filenames[index]}: mean = {image.mean()}")
     image = cv2.cvtColor(image, cv2.COLOR_HSV2BGR)
 # That actually gave us less of a clear distinction, so BGR mean it is!
+print("~"*50)
 
 def classify_image(some_image:np.ndarray) -> str:
     if some_image.mean() > 100:
-        print("Day image")
-        return "Day"
+        return "Day image"
     else:
-        print("Night image")
-        return "Night"
+        return "Night image"
 
-for picture in images:
-    classify_image(picture)
+for index, picture in enumerate(images):
+    print(f"{filenames[index]}: {classify_image(picture)}")
+
+print("~"*50)
 
 # You can choose a new image to test this method on
 choice = input("Use own image?(Y/N): ")
 if choice == "Y":
-    print("eeeee")
+    from tkinter import Tk, filedialog
+    # Tkinter is used as a quick solution to user file selection
+    root = Tk()
+    root.filename =  filedialog.askopenfilename(title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+    user_image = cv2.imread(root.filename)
+    print(f"{root.filename}: {classify_image(user_image)}")
 else:
     pass
+
+
+
+
 

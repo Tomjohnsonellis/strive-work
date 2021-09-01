@@ -2,7 +2,7 @@ image-recognition/MNIST_data
 image-recognition/assets
 deep-learning/wandb/
 */imgs*
-*/*/__pycache__
+**/__pycache__
 *.zip
 *.save
 *.idea

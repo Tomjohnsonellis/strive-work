@@ -61,10 +61,24 @@ def draw_text_underneath(text, x_pos, y_pos, draw, font, border_size) -> None:
     return
 
 
-def display_colour_histograms(some_image_in_BGR_form) -> None:
-    colours = ['b','g','r']
+def display_colour_histograms(some_image_in_BGR_form:np.ndarray, cvt_to_hsv:bool=False) -> None:
+    image = some_image_in_BGR_form
+    
+    if cvt_to_hsv:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        colours = ['r','b','black']
+        plt.title("HSV Data for image")
+        labels = ["Hue", "Sat", "Val"]
+    else:
+        colours = ['b','g','r']
+        plt.title("Colour values in image")
+    
     for i, colour in enumerate(colours):
-        hist = cv2.calcHist([some_image_in_BGR_form[:,:,i]] , [0], None, [256],[0,255])
+        hist = cv2.calcHist([image[:,:,i]] , [0], None, [256],[0,255])
         plt.plot(hist, color=colour)
+
+    if cvt_to_hsv: plt.legend(labels)
+    plt.xlabel("Value")
+    plt.ylabel("Frequency")
     plt.show()
     return

@@ -72,12 +72,13 @@ def display_colour_histograms(some_image_in_BGR_form:np.ndarray, cvt_to_hsv:bool
     else:
         colours = ['b','g','r']
         plt.title("Colour values in image")
+        labels = ["Blue", "Green", "Red"]
     
     for i, colour in enumerate(colours):
         hist = cv2.calcHist([image[:,:,i]] , [0], None, [256],[0,255])
         plt.plot(hist, color=colour)
 
-    if cvt_to_hsv: plt.legend(labels)
+    plt.legend(labels)
     plt.xlabel("Value")
     plt.ylabel("Frequency")
     plt.show()

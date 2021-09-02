@@ -29,3 +29,4 @@ misc/mifit/*
 
 computer-vision-two/__pycache__/helper_functions.cpython-39.pyc
 computer-vision-two/__pycache__/helper_functions.cpython-39.pyc
+.vscode/launch.json

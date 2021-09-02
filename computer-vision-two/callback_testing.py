@@ -6,9 +6,7 @@ current_space: "string" = "BGR"
 desired_space: "string" = "BGR"
 
 
-
-
-def change_to_desired_space(image:"Webcam feed", desired_space:"BGR/GRAY/HSV/RGB"=None) -> "Altered webcam feed":
+def change_to_desired_space(image: "Webcam_feed", desired_space: "BGR/GRAY/HSV/RGB" = None) -> "Altered_webcam_feed":
     if desired_space == "BGR":
         return image
     if desired_space == "GRAY":
@@ -20,8 +18,8 @@ def change_to_desired_space(image:"Webcam feed", desired_space:"BGR/GRAY/HSV/RGB
     if desired_space == "RGB":
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         return image
-        
-    
+
+
 # print(__annotations__)
 # print(change_to_desired_space.__annotations__)
 webcam_video = cv2.VideoCapture(0)
@@ -39,17 +37,17 @@ while(True):
 
     if key == ord('h'):
         desired_space = "HSV"
-    
+
     if key == ord('r'):
         desired_space = "RGB"
 
-
     frame = change_to_desired_space(frame, desired_space)
-    cv2.putText(frame, f"Current colour space: {desired_space}",(25,50), 0, 1, (0,255,0),2 ,1)
-    cv2.putText(frame, f"Key: {key}",(25,125), 0, 2, (0,0,255),2 ,1)
+    cv2.putText(
+        frame, f"Current colour space: {desired_space}", (25, 50), 0, 1, (0, 255, 0), 2, 1)
+    cv2.putText(frame, f"Key: {key}", (25, 125), 0, 2, (0, 0, 255), 2, 1)
     if key == 32:
-        cv2.putText(frame, "~SPACE~",(150,450), 0, 3, (255,0,255),2 ,1)
-    
+        cv2.putText(frame, "~SPACE~", (150, 450), 0, 3, (255, 0, 255), 2, 1)
+
     if key == 27:
         break
     cv2.imshow("Hello", frame)

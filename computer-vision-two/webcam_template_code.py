@@ -10,7 +10,7 @@ while(True):
     """
 
 
-    if cv2.waitKey(30) == ord('q'):
+    if cv2.waitKey(30) == 27: # ESC Key to close
         break
 webcam_video.release()
 cv2.destroyAllWindows()

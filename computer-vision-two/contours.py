@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 
 # Load an image, I've chosen some coins as they are nice shapes for this task
-image = cv2.imread("assets/chess.jpg")
+image = cv2.imread("assets/chess.jpg") # Windows
+image = cv2.imread("computer-vision-two/assets/coins.jpg") # Linux
 # Scale the image down
 smaller_image = cv2.resize(image, (image.shape[1] // 3, image.shape[0] // 3))
 # I only want the bottom half of this particular image
-smaller_image = smaller_image[160:,:]
+# smaller_image = smaller_image[160:,:]
 # Convert to binary image / greyscale
 grey = cv2.cvtColor(smaller_image, cv2.COLOR_BGR2GRAY)
 # Using a bit of gaussian blur can lead to better results
@@ -19,8 +20,15 @@ cv2.imshow("Blur", blurred)
 # # Combine
 # sobels = cv2.bitwise_or(sobel_h, sobel_v)
 # I fiddled around with Canny and binary thresholds, eventually decided on binary
-canny_image = cv2.Canny(blurred, 100, 255)
-ret, thresh = cv2.threshold(blurred, 170, 90, 0)
+# canny_image = cv2.Canny(blurred, 100, 255)
+ret, thresh = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
+# There's a little bit of noise inside the coins, we can clear that up with a "close"
+# Define the kernel
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+# Apply the close morph
+thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+
 # Use cv2 to get all the contour information
 contours, cont_info = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_TC89_KCOS)
 # Draw it on the coloured image

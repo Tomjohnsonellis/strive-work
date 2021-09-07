@@ -83,3 +83,14 @@ def display_colour_histograms(some_image_in_BGR_form:np.ndarray, cvt_to_hsv:bool
     plt.ylabel("Frequency")
     plt.show()
     return
+
+
+# Unnecessary, use this instead:
+# scaled_image = cv2.resize(image,(0,0), fx=factor, fy=factor)
+
+def scale_image(image:np.array, factor:float=0.5) -> np.array:
+    x = int(image.shape[1] * factor)
+    y = int(image.shape[0] * factor)
+    scaled_image = cv2.resize(image,(x,y))
+
+    return scaled_image

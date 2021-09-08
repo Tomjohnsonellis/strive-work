@@ -39,11 +39,44 @@ def demo_colour_spaces() -> None:
 # Topic: Annotations
 def demo_annotations() -> None:
     base_image = cv2.imread("computer-vision-two/assets/gamer.jpg")
-    small_image = cv2.resize(base_image.copy(),(0,0), fx=0.5, fy=0.5)
-    # TODO: Continue with demos, concepts are in notebook
+    
+    # In case this needs resizing...
+    annotated_image = cv2.resize(base_image.copy(),(0,0), fx=1, fy=1)
+    display_image(annotated_image)
 
+    # Various primitive shapes can be drawn on top of images with openCV
+    # https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga28b2267d35786f5f890ca167236cbc69
+    cv2.ellipse(annotated_image, (200,200), (100,50), 0, 0, 360, (100,64,255), -1)
+    display_image(annotated_image)
+    
+    # https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaf10604b069374903dbd0f0488cb43670
+    cv2.circle(annotated_image, (250,200), 25, (0,255,0), 10)
+    cv2.circle(annotated_image, (250,200), 10, (0,0,0), -1)
+    cv2.circle(annotated_image, (150,200), 25, (0,255,0), 10)
+    cv2.circle(annotated_image, (150,200), 10, (0,0,0), -1)
+    display_image(annotated_image)
+    
+    # https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#ga7078a9fae8c7e7d13d24dac2520ae4a2
+    cv2.line(annotated_image, (100, 125), (300, 125), (0,0,0), 5)
+    display_image(annotated_image)
 
+    # https://docs.opencv.org/master/d6/d6e/group__imgproc__draw.html#gaa3c25f9fb764b6bef791bf034f6e26f5
+    polygon_points = np.array([[600,400], [500,200], [575,210], [600,175],[625, 210], [700,200]], np.int32)
+    polygon_points.reshape((-1,1,2))
+    cv2.polylines(annotated_image, [polygon_points], True, (255,0,0), thickness=5)
+    display_image(annotated_image)
 
+    # You can even flip the image
+    overlay = annotated_image.copy()
+    overlay = cv2.flip(overlay, 1)
+    display_image(overlay)
+
+    # And overlay transparant images
+    opacity = 0.8
+    beta = 1 - opacity
+    annotated_image = cv2.addWeighted(annotated_image, opacity, overlay, beta, gamma=0 )
+
+    display_image(annotated_image)
     return
     
 
@@ -53,4 +86,5 @@ def demo_annotations() -> None:
 
 if __name__ == "__main__":
     # demo_colour_spaces()
+    # demo_annotations()
     pass

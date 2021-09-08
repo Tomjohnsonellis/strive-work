@@ -89,12 +89,70 @@ def demo_histograms() -> None:
     # Also useful for different colour spaces, HSV is typically more useful
     display_colour_histograms(base_image, cvt_to_hsv=True)
 
+def demo_affine_transforms() -> None:
+    image = cv2.imread('computer-vision-two/assets/meme.jpg')
+    original_size = image.shape
+    x = original_size[0]//4
+    y = original_size[1]//2
+    # Affine transformations are the result of some matrix multiplication
+    translation_matrix =np.float32([
+        [1, 0, x],
+        [0, 1, y]
+        ])
 
+    default_matrix = np.float32([
+        [0,0],
+        [1,0],
+        [0,1]
+    ])
+
+    altered_matrix = np.float32([
+        [0.3, 0],
+        [1, 0],
+        [0, 1.1]
+    ])
+
+    scale_matrix = np.float32([
+        [0, 0],
+        [0.3, 0],
+        [0, 0.3]
+    ])
+    display_image(image)
+    # Scale down
+    scale = cv2.getAffineTransform(default_matrix, scale_matrix)    
+    image = cv2.warpAffine(image, scale, (image.shape[1], image.shape[0]))
+    display_image(image)
+    
+    # Translation to center
+    image = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]))
+    display_image(image)
+    
+    # Whatever transform happens with the altered_matrix
+    transformation = cv2.getAffineTransform(default_matrix, altered_matrix)    
+    image = cv2.warpAffine(image, transformation, (image.shape[1], image.shape[0]))
+    display_image(image)
+
+    # Translation to center again
+    translation_matrix =np.float32([
+        [1, 0, 250],
+        [0, 1, 0]
+        ])
+    image = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]))
+    display_image(image)
+
+    # Finally, let's do a rotation
+    center = (image.shape[0]/2, image.shape[1]/2)
+    angle = 45
+    rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1)
+    image = cv2.warpAffine(image, rotation_matrix, (image.shape[1], image.shape[0]))
+    display_image(image)
+    return
 
 
 
 if __name__ == "__main__":
     # demo_colour_spaces()
     # demo_annotations()
-    demo_histograms()
+    # demo_histograms()
+    # demo_affine_transforms()
     pass

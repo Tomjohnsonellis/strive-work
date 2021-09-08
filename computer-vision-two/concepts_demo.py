@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from helper_functions import display_image, scale_image
+from helper_functions import display_colour_histograms, display_image, scale_image
 
 font = cv2.FONT_HERSHEY_TRIPLEX
 text_col = (255,255,255)
@@ -79,6 +79,15 @@ def demo_annotations() -> None:
     display_image(annotated_image)
     return
     
+def demo_histograms() -> None:
+    base_image = cv2.imread("computer-vision-two/assets/bus.jpg")
+    resized_image = cv2.resize(base_image.copy(),(0,0), fx=0.5, fy=0.5)
+    # Consider this image focusing on a big red bus
+    display_image(resized_image)
+    # We can use histograms to see how the colours make up an image
+    display_colour_histograms(base_image)
+    # Also useful for different colour spaces, HSV is typically more useful
+    display_colour_histograms(base_image, cvt_to_hsv=True)
 
 
 
@@ -87,4 +96,5 @@ def demo_annotations() -> None:
 if __name__ == "__main__":
     # demo_colour_spaces()
     # demo_annotations()
+    demo_histograms()
     pass

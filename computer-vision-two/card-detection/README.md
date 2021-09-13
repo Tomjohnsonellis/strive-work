@@ -1,8 +1,9 @@
 # Darknet installation for windows
 ***Honestly, probably easier and faster to install linux and then install from there***
-<p>
-I used [this guide](https://medium.com/analytics-vidhya/installing-darknet-on-windows-462d84840e5a) and this readme is just a condensed version of it.
-<p>
+<br>
+  I used [this guide](https://medium.com/analytics-vidhya/installing-darknet-on-windows-462d84840e5a) and this readme is just a condensed version of it.<br>
+  <br>
+STEPS:<br>
 Reinstall OpenCV, ticking the option to add it to system path<br>
 Reinstall Anaconda, ticking the option to add it to system path<br>
 Install CUDA<br>
@@ -11,20 +12,25 @@ Put CuDNN in your Cuda folder (If you are unsure where that is, an error message
 Download [vcpkg](https://github.com/Microsoft/vcpkg) and extract it somewhere memorable<br>
 Open up a Powershell:<br>
 cd to vcpkg's directory<br>
+  
 ```powershell
 bootstrap-vcpkg.bat
 vcpkg integrate install
 ```
+  
 Open up your [Windows Environment Variables](https://www.alphr.com/environment-variables-windows-10/)<br>
 Create one called: VCPKG_ROOT with a value of where you extracted vcpkg<br>
 Create another one called: VCPKG_DEFAULT_TRIPLET with a value of x64-windows<br>
 Powershell again:<br>
+  
 ```powershell
 cd $env:VCPKG_ROOT
 .\vcpkg install pthreads opencv[ffmpeg]
 ```
+  
 Download darknet put it wherever you like<br>
 Powershell again (ADMIN MODE):
+  
 ```
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 (Select yes to all)

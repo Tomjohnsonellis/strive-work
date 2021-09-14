@@ -42,5 +42,11 @@ darknet.exe detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights -thresh 0.
 
 This took me a about a day's work to get working with the download times and troubleshooting involved, I hope it helps someone out in the future.
 
+# Day 2 - Data Collection
+Today felt much more like progress, a pack of cards I ordered for this project arrived so now it was time to get some data from them.<br>
+We decided on 4 images of each card against a green background (I used some green card from my local hobby store)<br>
+For each card I took: A portrait close-up; a sideways shot; a zoomed out picture; and a skewed angle shot.<br>
+I then transferred the images to my desktop, organised into 52 folders (1 for each unique card) and shared out with the team members.<br>
+
 
 

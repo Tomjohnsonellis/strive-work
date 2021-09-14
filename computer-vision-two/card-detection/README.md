@@ -47,6 +47,11 @@ Today felt much more like progress, a pack of cards I ordered for this project a
 We decided on 4 images of each card against a green background (I used some green card from my local hobby store)<br>
 For each card I took: A portrait close-up; a sideways shot; a zoomed out picture; and a skewed angle shot.<br>
 I then transferred the images to my desktop, organised into 52 folders (1 for each unique card) and shared out with the team members.<br>
+### Evening work
+I've used  [Roboflow's annotator tool](https://roboflow.com/annotate) to create the bounding boxes, seems to be a pretty helpful tool!<br>
+The bounding boxes cover the car's corner value and symbol (8♥, A♧), with 4 corners on each card, that'll be 16 per card to train on, it's definitely a small sample size and a scalable approach should definitely be considered for the future.<br>
+An example of which is using one very clear image of a card, isolating the corner info's bounding box, then generating images from that with the help of image augmentation libraries. Different backgrounds, lighting, textures etc. which will give a much more robust model.
+
 
 
 

@@ -52,6 +52,8 @@ I've used  [Roboflow's annotator tool](https://roboflow.com/annotate) to create 
 The bounding boxes cover the car's corner value and symbol (8♥, A♧), with 4 corners on each card, that'll be 16 per card to train on, it's definitely a small sample size and a scalable approach should definitely be considered for the future.<br>
 An example of which is using one very clear image of a card, isolating the corner info's bounding box, then generating images from that with the help of image augmentation libraries. Different backgrounds, lighting, textures etc. which will give a much more robust model.
 
-
+# Day 3 
+Finished annotations about midday, exported them then fiddled about for a very long time trying to get yolov5 to run. After which point I remembered my office computer is a 10 year old dell so has no chance of training on the dataset within the week. Had to go through the setup again on my slightly more capable machine which also took considerable time. This project has really made me aware of how much time can be wasted on just system operation.<br>
+I have an odd setup at the moment, an old dell running ubuntu, a thinkpad laptop running windows, and a remote virtual machine with a graphics card running windows and has the linux subsystem for windows installed where I train the models. I spend most of my time on the desktop as the laptop only has VGA outputs which my monitors do not accept and the laptop screen hurts my eyes after any significant use time. In order to transfer files from machine to machine I use a Synology NAS drive which I honestly find to be a pain. Linux subsystem for windows is headless so I have had to get to grips with sftp in the terminal today which took even more time. My setup used to be very simple and absolutely needs reorganising, it's more akin to a balancing act or carnival game than a working environment currently.
 
 

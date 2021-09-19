@@ -48,16 +48,9 @@ def generate_snake(snake_length:int=10, board_array:list[int,int]=board) -> list
     x = random.randint(0, board_array[1])
     snake_head = [y,x]
 
-    # TESTING
-    snake_head = [3,4]
 
     snake = [snake_head]
-    # print(snake_head)
-    create_snake_body(snake, snake_length)
-
-
-    # Create X blocks
-    # Use the length and just create all the blocks at once
+    snake = create_snake_body(snake, snake_length)
 
 
 
@@ -91,120 +84,94 @@ def create_snake_body(snake:list[list[int,int]], snake_length:int, board_array:l
     print(f"TOP: {pos_top}")
     print(f"LEFT: {pos_left}")
 
-    generation_point = snake[0]
-    # If the snake is in the top section, generate sections downwards until the edge of the board.
-    if pos_top:
-        distance_to_wall = board_array[0] - generation_point[0] - 1
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0] + space + 1, generation_point[1]])
-            print("Added chunk...")
-            print(snake)
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
-    # Or if it's in the bottom section, generate upwards
-    else:
-        distance_to_wall = 0 + generation_point[0]
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0] - space - 1, generation_point[1]])
-            print("Added chunk...")
-            print(snake)
-            
-            if pieces_to_generate == 0:
-                break
-            pieces_to_generate -= 1
 
-    # Snake length is variable, so return if we're done
-    if pieces_to_generate == 0:
-                return snake
-
-    # Otherwise, continue generation from the new tail
-    generation_point = snake[-1]
     # If we're in the left section, generate right
     if pos_left:
-        distance_to_wall = board_array[1] - generation_point[1] - 1
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0], generation_point[1] + space + 1])
-            print("Added chunk...")
-            print(snake)
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
+        generate_right(snake, board)
     # Or if we're in the right section, generate left
     else:
-        distance_to_wall = 0 + generation_point[1]
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0], generation_point[1] - space - 1])
-            print("Added chunk...")
-            print(snake)
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
+        generate_left(snake, board)
     
-    # Snake length is variable, so return if we're done
-    if pieces_to_generate == 0:
-                return snake
+    # If the snake is in the top section, generate sections downwards until the edge of the board.
+    if pos_top:
+        generate_down(snake, board)
+    # Or if it's in the bottom section, generate upwards
+    else:
+        generate_up(snake, board)
+
+    # Snake length is variable, originally I was constantly checking to see if we had generated enough pieces
+    # But later decided that it's far simpler to just generate more then cut the snake down to size.
     # In most cases, going vertical and horizontal should be enough to generate the snake.
     # But for edge cases, we'll repeat the process, from here the snake would have generated into a corner.
-    # This is a programming sin but it's a few hours in and I'm still generating the snake so below is the same code.
-    generation_point = snake[-1]
-    if generation_point[0] <= mid_y:
+    if snake[-1][0] <= mid_y:
         pos_top = True
     else:
         pos_top = False
     
-    if generation_point[1] <= mid_x:
+    if snake[-1][1] <= mid_x:
         pos_left = True
     else:
         pos_left = False
-    if pos_top:
-        distance_to_wall = board_array[0] - generation_point[0] - 1
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0] + space + 1, generation_point[1]])
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
-    else:
-        distance_to_wall = 0 + generation_point[0]
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0] - space - 1, generation_point[1]])
-            print("Added chunk...")
-            print(snake)
-            
-            if pieces_to_generate == 0:
-                break
-            pieces_to_generate -= 1
-
-    if pieces_to_generate == 0:
-                return snake
-
-    generation_point = snake[-1]
     if pos_left:
-        distance_to_wall = board_array[1] - generation_point[1] - 1
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0], generation_point[1] + space + 1])
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
+        generate_right(snake, board)
     else:
-        distance_to_wall = 0 + generation_point[1]
-        for space in range(distance_to_wall):
-            snake.append([generation_point[0], generation_point[1] - space - 1])
-            pieces_to_generate -= 1
-            if pieces_to_generate == 0:
-                break
-    
+        generate_left(snake, board)
+    if pos_top:
+        generate_down(snake, board)
+    else:
+        generate_up(snake, board)
 
-    print(snake)
+    # Snip the snake
+    snake = snake[0:snake_length]
 
     return snake
 
-def maybe_plus_or_minus_one(value:int) -> int:
-    option = random.randint(-1,1)
-    value += option
-    return value
 
-
+def generate_down(snake, board):
+    tail = snake[-1]
+    distance_to_wall = board[0] - tail[0] - 1
     
+    if distance_to_wall <= 0:
+        print("Nowhere to go!")
+        return snake
+    for space in range(distance_to_wall):
+        snake.append([ tail[0] + space + 1, tail[1] ])
+    return snake
+
+
+def generate_up(snake, board):
+    tail = snake[-1]
+    distance_to_wall = 0 + tail[0]
+    
+    if distance_to_wall <= 0:
+        print("Nowhere to go!")
+        return snake
+    for space in range(distance_to_wall):
+        snake.append([ tail[0] - (space + 1), tail[1] ])
+    return snake
+
+
+def generate_left(snake, board):
+    tail = snake[-1]
+    distance_to_wall = 0 + tail[1]
+    if distance_to_wall <= 0:
+        print("Nowhere to go!")
+        return snake
+    
+    for space in range(distance_to_wall):
+        snake.append([ tail[0], tail[1] - (space + 1)])
+    return snake
+
+def generate_right(snake, board):
+    tail = snake[-1]
+    distance_to_wall = board[1] - tail[1] - 1
+    if distance_to_wall <= 0:
+        print("Nowhere to go!")
+        return snake
+
+    for space in range(distance_to_wall):
+        snake.append([ tail[0], tail[1] + (space + 1)])
+    return snake
+
 generate_snake()
 

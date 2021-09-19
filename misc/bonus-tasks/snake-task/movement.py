@@ -1,27 +1,20 @@
 from generators import generate_snake
 snake_array = list[int,int,]
-# Parameters
-length_of_snake = 5
+# Defining variables to compile sucessfully
 board = [4,5]
-
-snake = generate_snake(length_of_snake, board)
-
-print(snake)
-
-# snake[0][1] is y
-# snake[0][0] is x
+snake = generate_snake()
 
 def move_snake(direction:str, snake=snake, board=board) -> snake_array:
     if direction == "U":
-        pass
+        snake, valid = move_up()
     if direction == "D":
-        pass
-    if direction =="L":
-        pass
+        snake, valid = move_down()
+    if direction == "L":
+        snake, valid = move_left()
     if direction == "R":
-        pass
+        snake, valid = move_right()
 
-    return snake
+    return snake, valid
 
 def move_up(snake=snake, board=board):
     potential_new_head = [snake[0][0] - 1, snake[0][1] ]
@@ -91,18 +84,3 @@ def move_right(snake=snake, board=board):
     new_snake = snake[0:-1]
     return new_snake, True
 
-
-
-
-snake, valid = move_down()
-print(snake)
-print(valid)
-snake, valid = move_down()
-print(snake)
-print(valid)
-snake, valid = move_down()
-print(snake)
-print(valid)
-snake, valid = move_down()
-print(snake)
-print(valid)

@@ -1,3 +1,9 @@
+# POST PROJECT CLARITY:
+So, this project was not my finest work, but looking back our team has definitely learnt some hard lessons for future projects.
+I've even done a presentation on it! [HERE](https://www.beautiful.ai/player/-MjyaaqRl2zX0PmSdC38)<br>
+This readme will stay up as I believe it's important to admit mistakes and learn from them.
+
+
 # Darknet installation for windows
 ***Honestly, probably easier and faster to install linux and then install from there***
 <br>

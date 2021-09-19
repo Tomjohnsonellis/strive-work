@@ -63,17 +63,46 @@ def move_down(snake=snake, board=board):
 def move_left(snake=snake, board=board):
     potential_new_head = [snake[0][0], snake[0][1] - 1]
     # Is it possible?
+    if potential_new_head[1] == -1:
+        # print("Invalid move: LEFT - Wall")
+        return snake, False
+    # Is it legal?
+    if potential_new_head in snake:
+        # print("Invalid move: LEFT - Snake")
+        return snake, False
     
-
-
-
-
+    snake.insert(0, potential_new_head)
+    new_snake = snake[0:-1]
+    return new_snake, True
 
 def move_right(snake=snake, board=board):
     potential_new_head = [snake[0][0], snake[0][1] + 1]
+     # Is it possible?
+    if potential_new_head[1] > board[1]:
+        # print("Invalid move: RIGHT - Wall")
+        return snake, False
+    # Is it legal?
+    if potential_new_head in snake:
+        # print("Invalid move: RIGHT - Snake")
+        return snake, False
+    
+
+    snake.insert(0, potential_new_head)
+    new_snake = snake[0:-1]
+    return new_snake, True
 
 
 
+
+snake, valid = move_down()
+print(snake)
+print(valid)
+snake, valid = move_down()
+print(snake)
+print(valid)
+snake, valid = move_down()
+print(snake)
+print(valid)
 snake, valid = move_down()
 print(snake)
 print(valid)

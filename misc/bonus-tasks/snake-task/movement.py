@@ -6,17 +6,18 @@ snake = generate_snake()
 
 def move_snake(direction:str, snake=snake, board=board) -> snake_array:
     if direction == "U":
-        snake, valid = move_up()
+        snake, valid = move_up(snake, board)
     if direction == "D":
-        snake, valid = move_down()
+        snake, valid = move_down(snake, board)
     if direction == "L":
-        snake, valid = move_left()
+        snake, valid = move_left(snake, board)
     if direction == "R":
-        snake, valid = move_right()
+        snake, valid = move_right(snake, board)
 
     return snake, valid
 
 def move_up(snake=snake, board=board):
+    
     potential_new_head = [snake[0][0] - 1, snake[0][1] ]
     # Is it possible?
     if potential_new_head[0] == -1:

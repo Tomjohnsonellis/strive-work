@@ -8,6 +8,8 @@ A depth - d,
 How many valid paths of length d are available?
 
 Constraints:
+1 <= depth <= 20
+
 board max size is [10,10]
 board[0] represents rows
 board[1] represents columns

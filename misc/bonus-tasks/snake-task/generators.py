@@ -39,9 +39,10 @@ def validate_board(board_array:list[int]) -> bool:
 
 # Co-ordsinates are: Rows, Columns.
 # So 3x5 looks like...
-# 0 1 2 3 4
+# 0 1 2 3 4 5
 # 1 
 # 2
+# 3
 
 # board = [4,5]
 # snake_length = 5

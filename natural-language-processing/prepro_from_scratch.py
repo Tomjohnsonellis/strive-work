@@ -104,14 +104,15 @@ def pair_pipeline(file_path, complexity=1):
     remove_symbols(file_path)
     raw_sentences = get_sentences(file_path[:-4] + "-nosym.txt")
     no_blanks = remove_blanks(raw_sentences)
-    word2index, _, vocabulary_size = create_dictionary(no_blanks)
+    word2index, index2word, vocabulary_size = create_dictionary(no_blanks)
     pairs = get_pairs(no_blanks, word2index, complexity)
-    return np.array(pairs), vocabulary_size
+    return np.array(pairs), vocabulary_size, word2index, index2word
 
 
-pairs, words = pair_pipeline("natural-language-processing/data/poems.txt")
-print(pairs)
-print(words)
+if __name__ == "__main__":
+    pairs, words = pair_pipeline("natural-language-processing/data/poems.txt")
+    print(pairs)
+    print(words)
 
 
 

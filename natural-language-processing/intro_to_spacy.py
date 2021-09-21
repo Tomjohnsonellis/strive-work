@@ -70,7 +70,9 @@ for entity in apple_nlp.ents:
 print("-"*20, " Lemmas")
 # Next up, "lemmas", easiest way to explain lemmas is an example
 lemma_nlp = nlp("I am walking and eating.")
-print(token.lemma_ for token in lemma_nlp) # It's the infinitive of a verb
+for token in lemma_nlp:
+    print(token.lemma_)
+print([token.lemma_ for token in lemma_nlp]) # It's the infinitive of a verb
 # Stemming is the opposite of Lemmatization, but is generally too costly to be worth the benefit
 
 print("-"*20, " Stop words")
@@ -82,8 +84,8 @@ print(spacy.lang.en.stop_words.STOP_WORDS)
 
 print("-"*20, " Stop words Cont.")
 # Stop words can be removed from text like so:
-some_text = "The fabulous statistics continued to pour out of the telescreen. As compared with last year there was more food, more clothes, more houses, more furniture, more cooking-pots, more fuel, more ships, more helicopters, more books, more babies—more of everything except disease, crime, and insanity. Year by year and minute by minute, everybody and everything was whizzing rapidly upwards. As Syme had done earlier Winston had taken up his spoon and was dabbling in the pale-coloured gravy that dribbled across the table, drawing a long streak of it out into a pattern. He meditated resentfully on the physical texture of life."
-stop_nlp = nlp(some_text)
+dummy_text = "The fabulous statistics continued to pour out of the telescreen. As compared with last year there was more food, more clothes, more houses, more furniture, more cooking-pots, more fuel, more ships, more helicopters, more books, more babies—more of everything except disease, crime, and insanity. Year by year and minute by minute, everybody and everything was whizzing rapidly upwards. As Syme had done earlier Winston had taken up his spoon and was dabbling in the pale-coloured gravy that dribbled across the table, drawing a long streak of it out into a pattern. He meditated resentfully on the physical texture of life."
+stop_nlp = nlp(dummy_text)
 stops = [token.text for token in stop_nlp if token.is_stop]
 useful_words = [token.text for token in stop_nlp if not token.is_stop]
 # Quite a lot of words have been removed!
@@ -94,4 +96,41 @@ from collections import Counter
 # print(Counter(stops))
 # Can also find the top words!
 print(Counter(stops).most_common(5))
+
+print("-"*20, " Removing punctuation")
+import string
+print(f"Examples: {string.punctuation}")
+# No spacy method here, we'll do it the normal pythonic way with a comprehension
+text_without_punctuation = "".join([char for char in dummy_text if char not in string.punctuation])
+removed_punctuation = "".join([char for char in dummy_text if char in string.punctuation])
+#print(f"Text with no punctuation: {text_without_punctuation}")
+print(f"Removed: {removed_punctuation}")
+
+print("-"*20, " PartsOfSpeech (POS) Tagging")
+# At some point in an English class, you may have learnt about Proper Nouns, Auxillary verbs, etc. This is those
+speech_text = nlp("Alan Turing is regarded as one of the founding fathers of modern computing.")
+print(speech_text)
+# If you want to see what spacy thinks a word is, .pos_ will let you know, there are also tags!
+# For a complete list of tags: https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
+print([(token, token.pos_, token.tag_) for token in speech_text])
+# Thankfully, there is a more human readable version
+for token in speech_text:
+    print(token, " | ", token.pos_, " | ", token.tag_, " | ", spacy.explain(token.tag_))
+
+print("-"*20, " Named Entity Recognition (NER)")
+# For this one, please see ner_render.ipynb
+# This is the more "real world" part, a spacy model is trained to detect what things in a sentence are.
+ner_text = nlp("I am studying at Strive School.\nBig Ben is in London.\nJeff Bezos has a net worth of about $200 Billion.\nChickens lay eggs.\nPython is a reference to Monty Python, not the snake.")
+# from spacy import displacy # Very funny.
+# displacy.render(ner_text, style="ent")
+# We can still have a look at the NER tags.
+for entity in ner_text.ents:
+    # The spacy.explain method has multiple uses
+    print(entity.text, " | ", entity.label_, " | ", spacy.explain(entity.label_))
+
+
+
+
+
+
 

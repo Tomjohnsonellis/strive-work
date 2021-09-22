@@ -66,7 +66,7 @@
 
 
 #########################
-from numpy import ndarray
+import numpy as np
 import torch
 import torch.nn as nn
 from prepro_from_scratch import pair_pipeline
@@ -85,8 +85,6 @@ def input_layer(word_index):
 
 
 def train(n_epochs:int, lr:float, embedding_size:int):
-    # weights_1 = torch.Tensor(torch.rand(vocab_size, embedding_size).float(), requires_grad=True)
-    # weights_2 = torch.Tensor(torch.rand(embedding_size, vocab_size).float(), requires_grad=True)
     weights_1 = torch.rand(vocab_size, embedding_size, dtype=torch.float, requires_grad=True)
     weights_2 = torch.rand(embedding_size, vocab_size, dtype=torch.float, requires_grad=True)
     
@@ -97,7 +95,12 @@ def train(n_epochs:int, lr:float, embedding_size:int):
 
             x = torch.Tensor(input_layer(data))
             # y_ndarry = target.as_type(ndarray)
-            y_true = torch.Tensor([target])
+
+            # Correction: Convert this to a float
+            y_true = torch.from_numpy(np.array([target])).float()
+
+
+
 
             z1 = torch.matmul(x, weights_1)
             z2 = torch.matmul(z1, weights_2)
@@ -109,21 +112,28 @@ def train(n_epochs:int, lr:float, embedding_size:int):
 
             ### loss = nn.NLLloss(log_softmax(1,-1), y_true)
             loss_f = nn.NLLLoss()
-            loss = loss_f(my_log_softmax[1,-1], y_true)
+            # Correction: use .view()
+            loss = loss_f(my_log_softmax.view(1,-1), y_true)
             # loss = nn.NLLLoss(log_softmax, y_true)
 
             
-
+            loss.backward()
             lossval += loss
 
-            weights_1.data -= lr * weights_1.gradient_data
-            weights_2.data -= lr * weights_2.gradient_data
-
-            weights_1.gradient_data = 0
-            weights_2.gradient_data = 0
+            # Correction: Use X.grad.data
+            weights_1.data -= lr * weights_1.grad.data
+            weights_2.data -= lr * weights_2.grad.data
+            # Correction: Use .zero_() to set to zero
+            weights_1.grad.data.zero_()
+            weights_2.grad.data.zero_()
 
             if epoch % 10 == 0:
                 print(f"Loss at epoch {epoch + 1}: {lossval/len(dataset)}")
 
 
-train(100, 0.1, 2)
+    return weights_1
+
+if __name__ == "__main__":
+    # Embedding size should be something like 256+ depending on hardware
+    result = train(100, 0.01, 256)
+    print(result)

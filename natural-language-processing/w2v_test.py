@@ -96,8 +96,8 @@ def train(n_epochs:int, lr:float, embedding_size:int):
             x = torch.Tensor(input_layer(data))
             # y_ndarry = target.as_type(ndarray)
 
-            # Correction: Convert this to a float
-            y_true = torch.from_numpy(np.array([target])).float()
+            # Correction: Convert this to a long
+            y_true = torch.from_numpy(np.array([target])).long()
 
 
 
@@ -127,7 +127,7 @@ def train(n_epochs:int, lr:float, embedding_size:int):
             weights_1.grad.data.zero_()
             weights_2.grad.data.zero_()
 
-            if epoch % 10 == 0:
+            if epoch % 1000 == 0:
                 print(f"Loss at epoch {epoch + 1}: {lossval/len(dataset)}")
 
 

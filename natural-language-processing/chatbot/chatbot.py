@@ -79,10 +79,11 @@ def name_bot():
     i = random.randint(0, len(potential_names)-1)
     return potential_names[i]
 
-def talk_to_bot(chatbot, chatinfo, bot_name, verbose=False):
+def talk_to_bot(chatbot, chatinfo, bot_name, user_statement=None, verbose=False):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    user_statement = input("Please type your message: ")
+    if not user_statement:
+        user_statement = input("Please type your message: ")
     if user_statement == "exit":
         print("Exiting chat session...")
         return False
@@ -135,6 +136,16 @@ if __name__ == "__main__":
     chatbot, chatinfo = setup()
     bot_name = name_bot()
     print_intro(bot_name)
+
+    # # Test run
+    # talk_to_bot(chatbot, chatinfo, bot_name, "hello!", True)
+    # talk_to_bot(chatbot, chatinfo, bot_name, "do you have any food?", True)
+    # talk_to_bot(chatbot, chatinfo, bot_name, "my bones hurt!", True)
+    # talk_to_bot(chatbot, chatinfo, bot_name, "i want to die!", True)
+    # talk_to_bot(chatbot, chatinfo, bot_name, "exit", True)
+
+
+
     print("-[ You start the conversation. ]-")
     continue_conversation = True
     while continue_conversation:

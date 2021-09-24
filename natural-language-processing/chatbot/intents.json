@@ -43,14 +43,17 @@
           "Can I order a coke?",
           "I'm hungry",
           "We're starving",
-          "I'd like to have a pizza"
+          "I'd like to have a pizza",
+          "feed me",
+          "give me food",
+          "egg"
         ],
         "responses": [
           "We sell pizza, hamburgers and tacos",
           "We have coke and juice as beverage",
           "May we offer you a slice of hot pizza?",
           "Do you like tacos?",
-          "We're here for you."
+          "I'm a series of 1s and 0s, I cannot give you food."
         ]
       },
       {
@@ -59,7 +62,8 @@
           "Do you take credit cards?",
           "Do you accept Mastercard?",
           "Can I pay with Apple Pay or Paypal?",
-          "Can I pay with cash?"
+          "Can I pay with cash?",
+          "money"
         ],
         "responses": [
           "We accept VISA, Mastercard and Paypal",
@@ -83,6 +87,7 @@
       {
         "tag": "miscellaneous",
         "patterns": [
+          "comedy",
           "Tell me a joke!",
           "Tell me something funny!",
           "Let me laugh!"
@@ -111,6 +116,28 @@
           "Call Samaritans on 116 123",
           "That's a shame, call 999 for advice."
         ]
+      },
+      {
+          "tag":"medical",
+          "patterns":[
+              "my foot hurts",
+              "i am in pain",
+              "ouch",
+              "my leg hurts",
+              "my brain is broken",
+              "help me",
+              "immense pain",
+              "my kneecaps have exploded",
+              "there is a knife in my chest",
+              "i need a doctor"
+          ],
+          "responses":[
+              "Oh dear! That sounds painful!",
+              "If you need urgent medical help call 999",
+              "For minor injuries call 111",
+              "Contact your doctor",
+              "I don't actually have a physical form"
+          ]
       }
     ]
   }

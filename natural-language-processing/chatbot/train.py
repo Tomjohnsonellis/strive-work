@@ -53,7 +53,6 @@ def seperate_data(intents_dict:dict) -> tuple[list,list,list] :
 
 def augment_data(all_words, tags) -> tuple[list,list]:
     # We'll use stemming to increase the size of the training data
-    # Stemming is the opposite of Lemmatisation (running -> To run)
     
     # We do not care for punctuation
     ignore_words = ["!","?","."]

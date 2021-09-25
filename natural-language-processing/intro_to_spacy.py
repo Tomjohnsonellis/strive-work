@@ -68,12 +68,12 @@ for entity in apple_nlp.ents:
 # This is because spacy has been trained, nothing to do with grammar.
 
 print("-"*20, " Lemmas")
-# Next up, "lemmas", easiest way to explain lemmas is an example
+# Next up, "lemmas", which are the infinitive form of a word (Running -> Run)
+# Easiest way to explain lemmas is an example
 lemma_nlp = nlp("I am walking and eating.")
 for token in lemma_nlp:
     print(token.lemma_)
-print([token.lemma_ for token in lemma_nlp]) # It's the infinitive of a verb
-# Stemming is the opposite of Lemmatization, but is generally too costly to be worth the benefit
+print([token.lemma_ for token in lemma_nlp])
 
 print("-"*20, " Stop words")
 # "Stop words" are words that have little value to a sentence.

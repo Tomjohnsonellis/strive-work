@@ -84,13 +84,13 @@ named_entity_recogniser.add_label("FOOD")
 things_to_affect = ["ner", "trf_wordpiecer","trf_tok2vec"]
 unaffected = [pipe for pipe in nlp.pipe_names if pipe not in things_to_affect]
 with nlp.disable_pipes(*unaffected):
-    for iteration in range(30):
+    for iteration in range(10):
         # Shuffle the data, to help prevent overfitting
         random.shuffle(train_data)
         losses = {}
 
         # Batch up the data
-        batches = minibatch(train_data, size=32)
+        batches = minibatch(train_data, size=8)
         # Work through each batch
         for index, batch in enumerate(batches):
             for text, entities in batch:

@@ -123,6 +123,7 @@ def test_model(model):
 
 
 def get_food_training():
+    # Extension: Generate sentences using these
     words = ["ketchup", "pasta", "carrot", "pizza",
          "garlic", "tomato sauce", "basil", "carbonara",
          "eggs", "cheek fat", "pancakes", "parmigiana", "eggplant",
@@ -167,15 +168,25 @@ def combine_datasets(food, pokemon):
     return big_dataset
 
 if __name__ == "__main__":
-    pokemon = get_entities()
-    poke_sentences = generate_sentences(pokemon)
-    food_sentences = get_food_training()
-    # print(food_sentences)
-    # print("-"*50)
-    combined_data = combine_datasets(food_sentences, poke_sentences)
+    # # This will add pokemon to a previously trained food identifier
+    # pokemon = get_entities()
+    # poke_sentences = generate_sentences(pokemon)
+    # food_sentences = get_food_training()
+    # # print(food_sentences)
+    # # print("-"*50)
+    # combined_data = combine_datasets(food_sentences, poke_sentences)
     
-    food_nlp = spacy.load("natural-language-processing/named-entity-recognition/data/trained.nlp")
-    test_model(food_nlp)
-    food_and_poke = train_model(food_nlp, combined_data, save=True)
+    # food_nlp = spacy.load("natural-language-processing/named-entity-recognition/data/trained.nlp")
+    # test_model(food_nlp)
+    # food_and_poke = train_model(food_nlp, combined_data, save=True)
 
-    test_model(food_and_poke)
+    # test_model(food_and_poke)
+
+    # Debrief
+    model = spacy.load("natural-language-processing/named-entity-recognition/data/poke.nlp")
+    test_model(model)
+    print("-"*50)
+    # text = "Mewtwo ate my pizza"
+    text = input("Enter a sentence about pokemon and pizza: ")
+    doc = model(text)
+    print("Entities: ", [(entity.text, entity.label_) for entity in doc.ents])

@@ -10,6 +10,11 @@ Today we will be designing a new label and training a model to recognise it.
 
 import spacy
 import random
+import spacy
+import random
+from spacy.util import minibatch, compounding
+from pathlib import Path
+from spacy.training import Example
 
 # Load an NLP model
 nlp = spacy.load("en_core_web_md")
@@ -28,13 +33,12 @@ print("-"*50)
 # We will need to have some training data, in this case just a bunch of different food items
 words = ["ketchup", "pasta", "carrot", "pizza",
          "garlic", "tomato sauce", "basil", "carbonara",
-         "eggs", "linguine", "pancakes", "parmigiana", "eggplant",
-         "fettucine", "cream", "polenta", "risotto", "espresso",
-         "pasta", "spaghetti", "fiorentina steak", "pecorino",
-         "macaroni", "nutella", "amaro", "pistachio", "coca-cola",
+         "eggs", "cheek fat", "pancakes", "parmigiana", "eggplant",
+         "fettucine", "heavy cream", "polenta", "risotto", "espresso",
+         "arrosticini", "spaghetti", "fiorentina steak", "pecorino",
+         "maccherone", "nutella", "amaro", "pistachio", "coca-cola",
          "wine", "pastiera", "watermelon", "cappuccino", "ice cream",
-         "soup", "lemon", "chocolate", "pineapple", "nutella", "Tiramasu",
-         "croissant", "soup", "bread"]
+         "soup", "lemon", "chocolate", "pineapple"]
 
 # We will use this to create a training dataset
 # Go through the food file, clean up the text a bit
@@ -75,4 +79,49 @@ for sentence in food_dataset:
 named_entity_recogniser = nlp.get_pipe("ner")
 # Add our new "food" label
 named_entity_recogniser.add_label("FOOD")
+
+# In order to speed up model training, we'll use spacy's disable_pipes method, so we only alter what we need to.
+things_to_affect = ["ner", "trf_wordpiecer","trf_tok2vec"]
+unaffected = [pipe for pipe in nlp.pipe_names if pipe not in things_to_affect]
+with nlp.disable_pipes(*unaffected):
+    for iteration in range(30):
+        # Shuffle the data, to help prevent overfitting
+        random.shuffle(train_data)
+        losses = {}
+
+        # Batch up the data
+        batches = minibatch(train_data, size=32)
+        # Work through each batch
+        for index, batch in enumerate(batches):
+            for text, entities in batch:
+                # Make a doc out of the text
+                doc = nlp.make_doc(text)
+                # Create a spaCy "Example", which is two Docs, one is the correctly labelled info, the other is the pipeline's predictions
+                example = Example.from_dict(doc, entities)
+                # Update our nlp model with the info
+                nlp.update([example], losses=losses, drop=0)
+            print(f"Iteration: {iteration} | Batch: {index} | Loss: {losses}")
+
+# After training a model, we'd like to save it.
+nlp.to_disk("natural-language-processing/named-entity-recognition/data/trained.nlp")
+print("Saved!")
+
+# For the sake of not retraining the model on each test...
+if __name__ == "__main__":
+    # Let's test it:
+    trained_nlp = spacy.load("natural-language-processing/named-entity-recognition/data/trained.nlp")
+    # A sentence from the training set
+    test_one = trained_nlp("Get your hands off my pancakes!")
+    # Two new sentences containing known foods
+    test_two = trained_nlp("The italian chef recently pasta way.")
+    test_three = trained_nlp("Is wine even real? Grape soup is not.")
+    # Terms not in the training data
+    test_four = trained_nlp("chicken hamburger caviar")
+
+    tests = [test_one, test_two, test_three, test_four]
+    for doc in tests:
+        print("Entities: ", [(entity.text, entity.label_) for entity in doc.ents])
+
+
+
             

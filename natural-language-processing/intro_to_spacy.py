@@ -12,8 +12,11 @@ See here for an idea of how spaCy works: https://spacy.io/usage/linguistic-featu
 """
 #
 import spacy
+# Small
 nlp = spacy.load("en_core_web_sm")
-# Lightweight alternative
+# Medium
+# nlp = spacy.load("en_core_web_md")
+# Large
 # nlp = space.load("en_core_web_lg")
 
 # No idea what these are yet!

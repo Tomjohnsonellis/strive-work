@@ -76,13 +76,19 @@ def print_summary(summary_results):
     
     return
 
-def give_me_summary_and_stats(url):
+def give_me_summary_and_stats(url, save=False):
     summarizer = pipeline("summarization")
     blog_text = get_article_text(url)
     chunks = split_text(blog_text)
     res = summarizer(chunks, max_length=120, min_length=30, do_sample=False)
     stats = get_stats(chunks, res)
-    return res, stats
+    text = ' '.join([summ['summary_text'] for summ in res])
+
+    if save:
+        with open("natural-language-processing/text-summarising/summarised.txt", "w") as file:
+            file.write(text)
+
+    return text, stats
 
 
 if __name__ == "__main__":

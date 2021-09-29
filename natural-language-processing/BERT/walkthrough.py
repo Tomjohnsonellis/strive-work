@@ -1,5 +1,7 @@
 import datasets
-
+# This is an example of using BERT.
+# For an explanation of BERT I'd suggest https://www.youtube.com/watch?v=xI0HHN5XKDo
+# Or this paper if you prefer those: https://arxiv.org/pdf/1810.04805.pdf
 
 # HF has a very nice dataset tool: https://huggingface.co/docs/datasets/splits.html
 # ag_dataset = datasets.load_dataset('ag_news', split=["train[:50%]","test[:50%]"])
@@ -32,11 +34,63 @@ print(ag_splits)
 print("-"*50) # We seem to have 4 news categories
 
 # Then turn into a DatasetDict(), which looks quite similar
-all_datasets = datasets.DatasetDict(ag_splits)
-print(all_datasets)
+all_data = datasets.DatasetDict(ag_splits)
+print(all_data)
 
 # Now it's easy to access information we want like number of labels
-num_labels = len(set(all_datasets['train'].unique('label') + 
-                     all_datasets['test'].unique('label') +
-                     all_datasets['val'].unique('label')))
+# (We will need this later)
+num_labels = len(set(all_data['train'].unique('label') + 
+                     all_data['test'].unique('label') +
+                     all_data['val'].unique('label')))
 print(f"Unique Labels: {num_labels}")
+# See functions.py for this process as a function
+
+########
+# Next up, some preprocessing
+# As we are working with text, we will need to tokenize the data
+from transformers import AutoTokenizer
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+# We can write our own small function to help out
+def tokenize(dataset):
+    # Grab the sentences from a split
+    sentences = dataset["text"]
+    # Apply the tokenizer to them
+    return tokenizer(sentences, padding="max_length", truncation=True)
+
+# Then apply it with a mapping
+tokenized_dataset = all_data.map(tokenize, batched=True, remove_columns=["text"], desc="Tokenized Data")
+print("-"*50)
+print(tokenized_dataset)
+
+# Great! We now have a tokenized dataset, now we can create a model
+# We will use huggingface's already available things here
+from transformers import AutoConfig
+config = AutoConfig.from_pretrained("bert-base-uncased", num_labels=num_labels)
+from transformers import AutoModelForSequenceClassification
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", config=config)
+
+# When using pre-trained models, we do not train as such, but fine-tune
+# We actually only train the classification part, BERT is a fine model as is
+from transformers import TrainingArguments, Trainer
+import torch
+# Look this up if you're interested
+training_args = TrainingArguments(output_dir='bert-ag-news-classification',
+                                  per_device_train_batch_size=8,
+                                  per_device_eval_batch_size=8,
+                                  gradient_accumulation_steps=2,
+                                  num_train_epochs=3,
+                                  max_steps=10,
+                                  logging_steps=100,
+                                  logging_dir='bert-ag-news-classification/tb',
+                                  evaluation_strategy='epoch',
+                                  no_cuda=not torch.cuda.is_available()
+                                  )
+trainer = Trainer(model=model,
+                  tokenizer=tokenizer,
+                  args=training_args,
+                  train_dataset=all_data['train'],
+                  eval_dataset=all_data['val'])
+
+print("@"*50)
+# Breaks for some reason, followed the workbook very carefully but no luck.
+train_result = trainer.train()

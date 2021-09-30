@@ -53,9 +53,12 @@ def create_stop_words(vocab, count=20):
     stop_words = [word for _, word in vocab[-count:]]
     return stop_words
 
-
-def remove_stop_words(tokens):
-    # TODO: This
+def remove_punctuation(df):
+    symbols = "!\"£$%^&*()\',./#;:[]"
+    for symbol in symbols:
+        df["tokens"] = df["tokens"].apply(lambda token_set: [token.replace(symbol, "") for token in token_set])
+    
+    return df
 
 
 
@@ -68,13 +71,26 @@ if __name__ == "__main__":
     df = adjust_ratings(df)
 
     # TODO: Preprocessing? Remove stop words and punctuation, convert to consistent case
-    # Lemmatise!
+    # Lemmatise?
+
+    # Make lowercase
+    df["tokens"] = df["tokens"].apply(lambda token_set: [token.lower() for token in token_set])
+
+    # Remove punctuation
+    df = remove_punctuation(df)
+
+    # Stop word removal
     vocab = count_words(df["tokens"])
     print(f"Unique words: {len(vocab)}")
     # I'll make the 20 most used words my stop-words, looking into the data that seems plausibly useful
     stop_words = create_stop_words(vocab, 20)
     # Remove them from the dataset
-    df["tokens"] = remove_stop_words(df["tokens"], stop_words)
+    # Lambdas were a bit confusing for me, but I think I get them now
+    # This removes any tokens that appear in our stop-words
+    df["tokens"] = df["tokens"].apply(lambda token_set: [token for token in token_set if token not in stop_words])
+
+
+
 
 
     # Now that we have a nice dataset, we can begin the natural language processing

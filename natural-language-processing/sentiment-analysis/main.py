@@ -62,6 +62,9 @@ def remove_punctuation(df):
 
 
 
+#Embeddings
+from ppfs_copy import create_dictionary, get_pairs
+
 if __name__ == "__main__":
     amazon = torchtext.datasets.AmazonReviewFull
     training_iterator = amazon(split="test") # The training dataset is massive, the test will be MORE than enough for us
@@ -80,22 +83,26 @@ if __name__ == "__main__":
     df = remove_punctuation(df)
 
     # Stop word removal
-    vocab = count_words(df["tokens"])
-    print(f"Unique words: {len(vocab)}")
+    vocab_and_counts = count_words(df["tokens"])
+    print(f"Unique words: {len(vocab_and_counts)}")
     # I'll make the 20 most used words my stop-words, looking into the data that seems plausibly useful
-    stop_words = create_stop_words(vocab, 20)
+    stop_words = create_stop_words(vocab_and_counts, 20)
     # Remove them from the dataset
     # Lambdas were a bit confusing for me, but I think I get them now
     # This removes any tokens that appear in our stop-words
     df["tokens"] = df["tokens"].apply(lambda token_set: [token for token in token_set if token not in stop_words])
 
-
+    # Embeddings
+    # Refer to "natural-language-processing\embeddings\prepro_from_scratch.py"
+    w2i, i2w, vocab_size = create_dictionary(df["tokens"])
+    pairs = np.array(get_pairs(df["tokens"], w2i, 5))
+    # Now we have made a dataset of numerical values, we can train a model
 
 
 
     # Now that we have a nice dataset, we can begin the natural language processing
     # Load a model that you can run on the current hardware
-    # nlp = spacy.load("en_core_web_sm") # Small model
+    nlp = spacy.load("en_core_web_sm") # Small model
     # nlp = spacy.load("en_core_web_md") # Medium model
     # nlp = space.load("en_core_web_lg") # Large model
 

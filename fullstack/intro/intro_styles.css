@@ -1,0 +1,50 @@
+/* Give a maximum width to the body and center it in the page */
+body{
+    max-width: 66%;
+    text-align: center;
+}
+
+/* Set every h1 to be centered */
+h1{
+    text-align: center;
+}
+
+/* Change the colour of every link in the page */
+a{
+    color:crimson;
+}
+
+/* Create a class with a border */
+.bordered-class{
+    border-style: dashed double double double;
+}
+
+/* Add a margin between every paragraph */
+p{
+    margin: 10%;
+}
+
+/* Create a class that changes font size and boldness */
+.font-and-bold{
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+/* Create a class that hides the element */
+.element-hider{
+    display: none;
+}
+
+/* Create a class that hides the content */
+.content-hider{
+    content-visibility: hidden;
+}
+
+/* Grab a font and set it as default */
+@font-face {
+    font-family: lcd;
+    src: url(lcd.ttf);
+  }
+*{
+    font-family: lcd;
+}

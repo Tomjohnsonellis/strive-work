@@ -8,9 +8,9 @@
         <link rel="stylesheet" href="intro_styles.css">
     </head>
 
-    <body>
+    <body style="margin-top: 5%;">
         <!-- Create a heading -->
-        <h1>I am in fact, a heading.</h1>
+        <h1 id="home">I am in fact, a heading.</h1>
         <!-- Create an ordered list -->
         <ol>
             <!-- Add an image to every element of the list -->
@@ -39,15 +39,18 @@
         </div>
         
         <!-- Create a small "Contact Us" form with sender and message -->
-        <div style="padding-top: 5%; padding-bottom: 5%;">
+        <div id="contact" style="padding-top: 5%; padding-bottom: 5%;">
+            <form>
             <h2>Contact Me! (Don't actually)</h2>
-            <textarea>Who are you?</textarea>
-            <textarea>Your message</textarea>
+            <input type="text" value="Who are you?">
+            <textarea style="display: block; margin-left: auto; margin-right: auto;">Your message</textarea>
+            <input type="submit" value="SUBMIT">
+            </form>
         </div>
         
         <!-- CSS Testing -->
         <p> No border for this paragraph</p>
-        <p class="bordered-class">This is some text with a border</p>
+        <p id="cool_paragraph" class="bordered-class">This is some text with a border</p>
         <p class="font-and-bold"> No border for this paragraph, but different font and bolded</p>
 
 
@@ -56,5 +59,22 @@
             Thomas Johnson-Ellis | UK Data Scientist in training
         </footer>
 
+        <!-- Position a background image using the image tag and the position attribute -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Black_bold_spiral.svg/1200px-Black_bold_spiral.svg.png" width="50%"  style="opacity:0.2; position: absolute; margin-top: -75%; margin-left: -25%;" >
+
+        <!-- Create a navbar always hanging from the top of the page-->
+        <div class="navbar">
+            <ul style="list-style-type: none;">
+                <li>
+                    <a href="#home">Home</a>
+                </li>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+                <li>
+                    <a href="#cool_paragraph">Cool Paragraph</a>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>

@@ -48,3 +48,25 @@ p{
 *{
     font-family: lcd;
 }
+
+
+/* EXTRAS */
+/* Change the form submit button background colour when the mouse is over it */
+input[type="submit"]:hover {
+	background: magenta;
+}
+
+/* Create a navbar always hanging from the top of the page */
+.navbar{
+    background-color: cyan;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+
+}
+.navbar li:hover{
+    background-color: yellow;
+}
+.navbar li{
+    display: inline-block;
+}

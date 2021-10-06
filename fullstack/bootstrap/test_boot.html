@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link rel="stylesheet" href="overrideboot.css" >
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">One</div>
+            <div class="col">Two</div>
+            <div class="col-1">
+                [Small Column]
+            </div>
+            <div class="col-1">
+                [Small Column]
+            </div>
+            <div class="col-1">
+                [Small Column]
+            </div>
+            <div class="col">Three</div>
+        </div>
+    </div>
+
+    <div style="background-color: black; color: white;">
+        I am a divider
+    </div>
+<!--     
+    We can define layouts for each type of screen
+    class=" col-12 col-md-6 col-lg-3 col-xl-2"
+    It's how many columns out of 12 are taken up by the element
+    Think of this as an XL display will fit 6 things
+        X X X X X X X X X X X X
+    XL  Y Y * 6 => col-xl-2
+    LG  Y Y Y * 4 => col-lg-3
+    MD  Y Y Y Y Y Y * 2 => col-md-6
+    SM  Y Y Y Y Y Y Y Y Y Y Y Y => col-sm-12
+-->
+
+<!-- NOTE: Bootstrap is mobile first! So specifying rules will apply to that and larger
+E.g. Hiding elements for medium devices will also hide them on large and XL -->
+
+    <div class="container-fluid">
+        <div class="row"></div>
+        <div class="col-12">
+            <img class=" vibrate-1 col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+            <img class="col-md-5 col-lg-2 d-xl-none" src="images/spin.gif">
+        </div>
+    </div>
+
+    <!-- 
+        Margins and padding can be set based on screen sizes as well!
+        pl-5 = padding to the left is 5
+        pl-xl-10 = padding to the left on EXTRA LARGE screens is set to 10
+        mt-md-2 = margin top on medium screens is 2
+
+        m margin
+        p padding
+
+        t top
+        b bottom
+        l left
+        r right
+
+     -->
+
+     <!-- There are plenty of pre-built things available!
+    badges, breadcrumbs, alerts...  https://getbootstrap.com/docs/5.0/components/badge/ -->
+        <div id="badges">
+            <span class="badge rounded-pill bg-primary">Primary</span>
+            <span class="badge rounded-pill bg-secondary">Secondary</span>
+            <span class="badge rounded-pill bg-success">Success</span>
+            <span class="badge rounded-pill bg-danger">Danger</span>
+            <span class="badge rounded-pill bg-warning text-dark">Warning</span>
+            <span class="badge rounded-pill bg-info text-dark">Info</span>
+            <span class="badge rounded-pill bg-light text-dark">Light</span>
+            <span class="badge rounded-pill bg-dark">Dark</span>
+        </div>
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

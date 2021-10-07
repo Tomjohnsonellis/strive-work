@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="apitest.css">
+    <title>OMDB API TESTING</title>
+  </head>
+  <body>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript goes here
+        const api_key = "http://www.omdbapi.com/?i=tt3896198&apikey=6cf846de"
+
+        function get_query(){
+            const query = document.getElementById("search_box").value
+            console.log(query)
+            return query
+        }
+
+        function create_search_query(query, api=api_key){
+            var formatted_query = query.replaceAll(" ","+") 
+            const search_query = api+"&s="+formatted_query
+            return search_query
+        }
+
+        async function get_data(api_request){
+            const promise = await fetch(api_request).then(response => response.json())
+            console.log(promise)
+
+            return promise
+
+            // // Not too sure what's wrong with this, it awaits the response then turns it into a json
+            // let response = await fetch(api_request)
+            // let data = await response.json()
+            // return data
+        }
+
+        async function perform_search(){
+            const api_call = create_search_query(get_query())
+            console.log("Searching for: " +get_query())
+            console.log(api_call)
+            const movie_data = get_data(api_call)
+            console.log(movie_data)
+            return movie_data
+        }
+
+        async function build_website(data){
+            console.log("-----")
+            console.log(data["Search"])
+            console.log(data["Search"][0])
+            console.log("-----")
+            const movies = data["Search"]
+            const movie_zone = document.querySelector("#movie_container")
+            for (let i = 0; i < movies.length; i++){
+                const a_movie = movies[i]
+                // movie_zone.innerHTML += ' <div class="container"> '
+                // movie_zone.innerHTML += ' <div class="item"><div class="item"><img src=' + a_movie["Poster"] + '>'
+                // movie_zone.innerHTML += ' <div class="item"><p>' + a_movie["Title"] + "<br>" + a_movie["Year"]
+
+
+                // movie_zone.innerHTML += '</div></div></div></div>'
+
+                var temp = ""
+
+                temp += ' <div class="container"> '
+                temp += ' <img class="item" src=' + a_movie["Poster"] + ' />'
+                temp += ' <p class="item"> ' + a_movie["Title"] + '<br>' + a_movie["Year"] + '</p>'
+                temp += ' </div>'
+
+                movie_zone.innerHTML += temp
+
+                
+            }
+
+            
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+        async function search_and_display(){
+            // Take the text, convert it into a valid api call, then perform that api call, return the results
+            const data_array = await perform_search()
+            build_website(data_array)
+            
+
+
+
+        }
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- Search Box -->
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">Search for a movie:</span>
+                    <input id="search_box" type="text" class="form-control" placeholder="The Great Hack" aria-label="search_box" aria-describedby="addon-wrapping">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-success" type="button" onclick="search_and_display()">Search!</button>
+          </div>
+    </div>
+
+    <div id="movie_container" class="container">
+        <!-- Put stuff here with javascript -->
+    </div>
+
+    <div id="root">
+        <!-- Webpage content goes here -->
+    </div>
+  </body>
+</html>

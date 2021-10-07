@@ -1,0 +1,6 @@
+div.container{
+    /* display: flexbox; */
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}

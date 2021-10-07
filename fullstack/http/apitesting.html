@@ -57,6 +57,9 @@
             console.log("-----")
             const movies = data["Search"]
             const movie_zone = document.querySelector("#movie_container")
+            movie_zone.innerHTML = ""
+
+
             for (let i = 0; i < movies.length; i++){
                 const a_movie = movies[i]
                 // movie_zone.innerHTML += ' <div class="container"> '
@@ -69,8 +72,19 @@
                 var temp = ""
 
                 temp += ' <div class="container"> '
-                temp += ' <img class="item" src=' + a_movie["Poster"] + ' />'
-                temp += ' <p class="item"> ' + a_movie["Title"] + '<br>' + a_movie["Year"] + '</p>'
+
+                temp += ' <div class="row align-items-center">'
+
+                temp += ' <div class="col">'
+                temp += ' <img class="animated" src=' + a_movie["Poster"] + ' />'
+                temp += ' </div>'
+                
+                temp += ' <div class="col">'
+                temp += ' <p class="item"> ' + a_movie["Title"] + '<br>(' + a_movie["Year"] + ')</p>'
+                temp += ' </div>'
+                
+                temp += ' </div>'
+
                 temp += ' </div>'
 
                 movie_zone.innerHTML += temp

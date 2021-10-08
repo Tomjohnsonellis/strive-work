@@ -1,0 +1,19 @@
+:root{
+    /* CSS HEX */
+    --bg-col: #330c2fff;
+    --primary-col: #7b287dff;
+    --secondary-col: #7067cfff;
+    --accent-col: #b7c0eeff;
+    --misc-col: #cbf3d2ff;
+
+}
+body{
+    background-color: var(--bg-col);
+    color: var(--primary-col);
+}
+
+div.col{
+    background-color: var(--secondary-col);
+    color: var(--misc-col);
+    justify-content: space-evenly;
+}
